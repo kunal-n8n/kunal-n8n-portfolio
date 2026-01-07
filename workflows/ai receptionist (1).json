@@ -1,0 +1,1164 @@
+{
+  "name": "ai receptionist",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "make_booking",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -816,
+        -512
+      ],
+      "id": "b72a07bb-1f3b-4088-98cf-71e3ca43dbcb",
+      "name": "Webhook",
+      "webhookId": "1982fe54-ee1d-4e74-9b70-1e6ad6b5cb02"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "absc5046@gmail.com",
+          "mode": "id"
+        },
+        "start": "={{ $json.isoDateTime }}",
+        "end": "={{ $json.isoDateTimePlus1_hr }}",
+        "additionalFields": {
+          "description": "=Name - {{ $('Webhook').item.json.body.args.name }} \nNumber - {{ $('Webhook').item.json.body.args.contact_number }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -416,
+        -512
+      ],
+      "id": "227910da-c96f-4748-a9a2-faf9e25091fc",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Qn0pqPIYggaFSPt9",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const booking_date = $input.first().json.body.args.booking_date;\nconst booking_time = $input.first().json.body.args.booking_time;\n\nconst isoDateTime = `${booking_date}T${booking_time}:00+05:30`;\n\nconst dateObj = new Date(`${booking_date}T${booking_time}:00`);\ndateObj.setMinutes(dateObj.getMinutes() + 60); \n\nconst year = dateObj.getFullYear();\nconst month = String(dateObj.getMonth() + 1).padStart(2, '0');\nconst day = String(dateObj.getDate()).padStart(2, '0');\nconst hours = String(dateObj.getHours()).padStart(2, '0');\nconst minutes = String(dateObj.getMinutes()).padStart(2, '0');\nconst seconds = String(dateObj.getSeconds()).padStart(2, '0');\n\nconst isoDateTimePlus1_hr = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+05:30`;\n\nreturn {\n  json: {\n    isoDateTime: isoDateTime,\n    isoDateTimePlus1_hr: isoDateTimePlus1_hr\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -608,
+        -512
+      ],
+      "id": "0a1db063-e5b2-47b2-a0e7-dbe2ad83c059",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc",
+          "mode": "list",
+          "cachedResultName": "dentistData",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -624,
+        -272
+      ],
+      "id": "986acd44-d7bf-4d62-8348-938725e26fce",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JJqNweTvvZPT1Yr7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst items = $input.all(); \n\n// Get the last row's AppointmentCode\nconst lastItem = items[items.length - 1];\nconst lastCode = lastItem.json.AppointmentCode;\n\nconst n = parseInt(lastCode) || 0;\n\nconst generatedNumber = n + 1;\n\n\nreturn items.map((item, index) => ({\n  json: {\n    ...item.json, \n    lastAppointmentCode: n,\n    newAppointmentCode: generatedNumber\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        -512
+      ],
+      "id": "fe6bbc72-da18-4cfb-a428-41dd2a908475",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"otp\": \"{{ $json.AppointmentCode }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        352,
+        -512
+      ],
+      "id": "99f1e711-7f2c-4bb6-8142-2958e3d1e09d",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc",
+          "mode": "list",
+          "cachedResultName": "dentistData",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -224,
+        -512
+      ],
+      "id": "e7236e72-a0f9-4faa-b2e0-0eccc7b8a566",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JJqNweTvvZPT1Yr7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "checkCode",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -848,
+        -272
+      ],
+      "id": "a1c31862-3d95-4bf1-85a7-44e0faae82e6",
+      "name": "checkCode",
+      "webhookId": "4b90e640-4a61-45a0-aa5d-875ae8eef7e5"
+    },
+    {
+      "parameters": {
+        "content": "## Book and Generate verification code\n",
+        "height": 224,
+        "width": 1456,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        -576
+      ],
+      "typeVersion": 1,
+      "id": "da8bad0e-e9c3-4e12-8412-2d60c39d7963",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc",
+          "mode": "list",
+          "cachedResultName": "dentistData",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Webhook').item.json.body.args.name }}",
+            "ContactNumber": "={{ $('Webhook').item.json.body.args.contact_number }}",
+            "booking_date": "={{ $('Webhook').item.json.body.args.booking_date }}",
+            "booking_time": "={{ $('Webhook').item.json.body.args.booking_time }}",
+            "AppointmentType": "=",
+            "AppointmentCode": "={{ $json.newAppointmentCode }}"
+          },
+          "matchingColumns": [
+            "ContactNumber"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ContactNumber",
+              "displayName": "ContactNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AppointmentCode",
+              "displayName": "AppointmentCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AppointmentType",
+              "displayName": "AppointmentType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        160,
+        -512
+      ],
+      "id": "2420edd5-1a08-4106-8541-41bf813ae0b0",
+      "name": "AddData",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JJqNweTvvZPT1Yr7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c646941a-2b9c-4241-8b25-3365038e6ea5",
+              "leftValue": "={{ $json.AppointmentCode }}",
+              "rightValue": "={{ $('checkCode').item.json.body.args.Appointment_code }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "806e37e6-3a93-4c05-a610-109be1a0ff40",
+              "leftValue": "={{ $json.Name }}",
+              "rightValue": "={{ $('checkCode').item.json.body.args.name }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        -272
+      ],
+      "id": "4b65f548-b79b-4250-a3bd-f9e428ea33fd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "True",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -144,
+        -288
+      ],
+      "id": "ac96fdf3-857b-4c99-a17d-76d59d114e54",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "content": "## VerifyCode\n",
+        "height": 208,
+        "width": 1168,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "a6805aa6-3890-4424-a68e-b550d544bd90",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rescheduling",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -848,
+        -16
+      ],
+      "id": "06454358-c8b4-4f85-8cf6-1522dc6c8823",
+      "name": "Webhook1",
+      "webhookId": "dae19fe2-e89d-4f82-af00-229a3eb474f7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const new_bookingdate = $input.first().json.body.args.new_bookingdate;\nconst new_booking_time = $input.first().json.body.args.new_booking_time;\n\nconst isoDateTime = `${new_bookingdate}T${new_booking_time}:00+05:30`;\n\nconst dateObj = new Date(`${new_bookingdate}T${new_booking_time}:00`);\ndateObj.setMinutes(dateObj.getMinutes() + 60); \n\nconst year = dateObj.getFullYear();\nconst month = String(dateObj.getMonth() + 1).padStart(2, '0');\nconst day = String(dateObj.getDate()).padStart(2, '0');\nconst hours = String(dateObj.getHours()).padStart(2, '0');\nconst minutes = String(dateObj.getMinutes()).padStart(2, '0');\nconst seconds = String(dateObj.getSeconds()).padStart(2, '0');\n\nconst isoDateTimePlus1_hr = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+05:30`;\n\n\nreturn {\n  json: {\n    isoDateTime: isoDateTime,\n    isoDateTimePlus1_hr: isoDateTimePlus1_hr\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        -16
+      ],
+      "id": "a13d30ad-eb59-44d5-80ea-319591cc45ef",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "absc5046@gmail.com",
+          "mode": "id"
+        },
+        "start": "={{ $json.isoDateTime }}",
+        "end": "={{ $json.isoDateTimePlus1_hr }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -432,
+        -16
+      ],
+      "id": "43f2803b-5893-477c-b2b3-53f7e37ceef0",
+      "name": "Create an event1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Qn0pqPIYggaFSPt9",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc",
+          "mode": "list",
+          "cachedResultName": "dentistData",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "AppointmentType": "=",
+            "booking_time": "=",
+            "booking_date": "=",
+            "ContactNumber": "=",
+            "Name": "=",
+            "AppointmentCode": "={{ $json.AppointmentCode }}"
+          },
+          "matchingColumns": [
+            "AppointmentCode"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ContactNumber",
+              "displayName": "ContactNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AppointmentCode",
+              "displayName": "AppointmentCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AppointmentType",
+              "displayName": "AppointmentType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        64,
+        -288
+      ],
+      "id": "e13ad2cc-36f6-4ec2-bbcb-24be3bdcd2f2",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JJqNweTvvZPT1Yr7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst items = $input.all(); \n\n// Get the last row's AppointmentCode\nconst lastItem = items[items.length - 1];\nconst lastCode = lastItem.json.AppointmentCode;\n\nconst n = parseInt(lastCode) || 0;\n\nconst generatedNumber = n + 1;\n\n\nreturn items.map((item, index) => ({\n  json: {\n    ...item.json, \n    lastAppointmentCode: n,\n    newAppointmentCode: generatedNumber\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        -16
+      ],
+      "id": "cd7d5246-75a9-4e66-81cc-64788535d7f9",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"otp\": \"{{ $json.AppointmentCode }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        336,
+        -16
+      ],
+      "id": "57b0b119-8a50-4eae-8f5c-c294ac5c25f9",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc",
+          "mode": "list",
+          "cachedResultName": "dentistData",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -240,
+        -16
+      ],
+      "id": "01228a70-3187-41b7-978d-434a7f9f2238",
+      "name": "Get row(s) in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JJqNweTvvZPT1Yr7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc",
+          "mode": "list",
+          "cachedResultName": "dentistData",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Webhook1').item.json.body.args.name }}",
+            "ContactNumber": "={{ $('Webhook1').item.json.body.args.contact_number }}",
+            "booking_date": "={{ $('Webhook1').item.json.body.args.new_bookingdate }}",
+            "booking_time": "={{ $('Webhook1').item.json.body.args.new_booking_time }}",
+            "AppointmentType": "={{ $('Webhook1').item.json.body.args.appointment_type }}",
+            "AppointmentCode": "={{ $json.newAppointmentCode }}"
+          },
+          "matchingColumns": [
+            "ContactNumber"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ContactNumber",
+              "displayName": "ContactNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AppointmentCode",
+              "displayName": "AppointmentCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AppointmentType",
+              "displayName": "AppointmentType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        144,
+        -16
+      ],
+      "id": "a36da264-06ed-4606-b89b-1d9e22c17b7a",
+      "name": "AddData1",
+      "retryOnFail": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JJqNweTvvZPT1Yr7",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Rescheduling and GenerateCode\n ",
+        "height": 240,
+        "width": 1440,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "d56f756b-f0d8-435a-a285-e8886e3f1056",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const booking_date = $input.first().json.body.args.booking_date;\nconst booking_time = $input.first().json.body.args.booking_time;\n\nconst isoDateTime = `${booking_date}T${booking_time}:00+05:30`;\n\nconst dateObj = new Date(`${booking_date}T${booking_time}:00`);\ndateObj.setMinutes(dateObj.getMinutes() + 60); \n\nconst year = dateObj.getFullYear();\nconst month = String(dateObj.getMonth() + 1).padStart(2, '0');\nconst day = String(dateObj.getDate()).padStart(2, '0');\nconst hours = String(dateObj.getHours()).padStart(2, '0');\nconst minutes = String(dateObj.getMinutes()).padStart(2, '0');\nconst seconds = String(dateObj.getSeconds()).padStart(2, '0');\n\nconst isoDateTimePlus1_hr = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+05:30`;\n\n\nreturn {\n  json: {\n    isoDateTime: isoDateTime,\n    isoDateTimePlus1_hr: isoDateTimePlus1_hr\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -624,
+        256
+      ],
+      "id": "ec7107e5-a339-40b7-82df-dc1ed4760ef4",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "content": "## Cancellation and DeleteRecord\n\n ",
+        "height": 224,
+        "width": 1088,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "3736110b-367f-421c-9a71-8c2c2a34caf6",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "absc5046@gmail.com",
+          "mode": "id"
+        },
+        "limit": 1,
+        "timeMin": "={{ $json.isoDateTime }}",
+        "timeMax": "={{ $json.isoDateTimePlus1_hr }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -416,
+        256
+      ],
+      "id": "1f55d38d-dad1-43ba-8f5f-426a0b97affa",
+      "name": "Get many events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Qn0pqPIYggaFSPt9",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cancellation",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -832,
+        256
+      ],
+      "id": "1298322d-bb72-4ccf-8551-2c9ea7358c2a",
+      "name": "cancellation",
+      "webhookId": "dae19fe2-e89d-4f82-af00-229a3eb474f7"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc",
+          "mode": "list",
+          "cachedResultName": "dentistData",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dxBGC5Cfu2ZNnyudStD3TjR7rn8csF4mwVEsm-5sOXc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "AppointmentType": "=",
+            "booking_time": "=",
+            "booking_date": "=",
+            "ContactNumber": "=",
+            "Name": "=",
+            "AppointmentCode": "={{ $('cancellation').item.json.body.args.Appointment_code }}"
+          },
+          "matchingColumns": [
+            "AppointmentCode"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ContactNumber",
+              "displayName": "ContactNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AppointmentCode",
+              "displayName": "AppointmentCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AppointmentType",
+              "displayName": "AppointmentType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        0,
+        256
+      ],
+      "id": "2ea06bcc-d241-4e7e-b119-af818f4d25aa",
+      "name": "Append or update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JJqNweTvvZPT1Yr7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "absc5046@gmail.com",
+          "mode": "list",
+          "cachedResultName": "absc5046@gmail.com"
+        },
+        "eventId": "={{ $json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -208,
+        256
+      ],
+      "id": "6346ff64-01aa-49d9-b308-922e2cfbea27",
+      "name": "Delete an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "Qn0pqPIYggaFSPt9",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "AddData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddData": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "checkCode": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Create an event1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "AddData1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddData1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Delete an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cancellation": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1c46a6fb-67ad-4024-9abf-cb8363bc46fe",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2473cecb7731dd9e2af39f4558afe60d56e49d3ec66ab808319f331147a261ca"
+  },
+  "id": "LJiNYlJtDroGuqXK",
+  "tags": []
+}
