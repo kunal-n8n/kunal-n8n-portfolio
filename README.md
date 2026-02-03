@@ -50,7 +50,7 @@ Even with a small number of projects, this portfolio demonstrates:
 
 ## 📁 Repository Structure
 
-/assets         → All the image resources used
+/assets         → All the image resources used    
 /workflows      → Exported n8n workflow JSON files  
 /case-studies   → Detailed write-ups explaining each automation  
 README.md       → Overview of the portfolio and my skills
