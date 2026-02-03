@@ -72,11 +72,10 @@ Everything runs automatically with no manual work.
 
 ## 📸 Screenshots
 
-![Lead Nurture Workflow 1](../assets/LeadNurture1)
+![LeadNurture1](../assets/LeadNurture1.png)
 
-![Lead Nurture Workflow 2](../assets/LeadNurture2)
+![LeadNurture2](../assets/LeadNurture2.png)
 
-![Lead Nurture Workflow 3](../assets/LeadNurture3)
-
+![LeadNurture3](../assets/LeadNurture3.png)
 
 ---
