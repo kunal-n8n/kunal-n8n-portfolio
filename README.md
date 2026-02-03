@@ -19,7 +19,7 @@ My goal is to build workflows that are:
 Here are detailed explanations of the automations I have built:
 
 - [AI Receptionist → Appointment Booking + Verification Code System](./case-studies/ai-receptionist-verification-code.md)
-- [Lead Nurture + Link tracking + Unsubscribe mechanism automation](./case-studies/Lead_Nurture.md)
+- [Lead Nurture + Link tracking + Unsubscribe mechanism automation](case-studies/Lead_Nurture)
 
 More projects and case studies will be added as I continue building new workflows.
 
