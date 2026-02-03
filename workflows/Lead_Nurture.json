@@ -1,0 +1,5386 @@
+{
+  "name": "Lead_Nurture",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e8ad4a95-c1ce-4d64-9a4b-167980da3896",
+              "name": "pixel",
+              "type": "string",
+              "value": "={{ Array.from({length: 20}, () => Math.random().toString(36).charAt(2)).join('') }}"
+            },
+            {
+              "id": "73c0c4d5-d2fd-402s5-8a02-c2f376f517cb",
+              "name": "webhook_url",
+              "type": "string",
+              "value": "YOUR_NGROK_OR_WEBHOOK_BASE_URL/webhook/YOUR_WEBHOOK_ID_1/link"
+            },
+            {
+              "id": "2a7ba122-12c8-4efe-a977-8fdf85c240b9",
+              "name": "unsub_code",
+              "value": "={{ Array.from({length: 10}, () => Math.random().toString(36).charAt(2)).join('') + '+' + Array.from({length: 10}, () => Math.random().toString(36).charAt(2)).join('') }}",
+              "type": "string"
+            },
+            {
+              "id": "2041dd3e-08d1-4cda-9b75-625bd0c25055",
+              "name": "unsub_url",
+              "value": "YOUR_NGROK_OR_WEBHOOK_BASE_URL/webhook/YOUR_WEBHOOK_ID_2/unusb_code",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "78100a12-98cc-4eaa-9255-de8cd6bd0da5",
+      "name": "Generate Pixel",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        544,
+        48
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "path": "link/:code",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        2208,
+        224
+      ],
+      "id": "6a326916-942e-49f2-b0a3-da6ff14f70fe",
+      "name": "Webhook",
+      "webhookId": "YOUR_WEBHOOK_ID_1"
+    },
+    {
+      "parameters": {
+        "respondWith": "redirect",
+        "redirectURL": "your_landing_page_url_or_relevant_link",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2432,
+        224
+      ],
+      "id": "b307c9f1-738a-4819-8a5c-d6edd3d6a898",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "tracking_code": "={{ $json.params.code }}",
+            "edu_link_visited": "Yes"
+          },
+          "matchingColumns": [
+            "tracking_code"
+          ],
+          "schema": [
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "tracking_code",
+              "displayName": "tracking_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "edu_link_visited",
+              "displayName": "edu_link_visited",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email_recieved?",
+              "displayName": "email_recieved?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "case_study_link",
+              "displayName": "case_study_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved2?",
+              "displayName": "email_recieved2?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "meeting_code",
+              "displayName": "meeting_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "booking_status",
+              "displayName": "booking_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2880,
+        224
+      ],
+      "id": "dd47c16f-3cf5-4f00-8027-1bafbf7309c8",
+      "name": "Update Row"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "da08e436-d216-4152-850c-fcbb301d36ff",
+              "name": "params.code",
+              "value": "={{ $json.params.code }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2656,
+        224
+      ],
+      "id": "560a1019-6bb5-47c8-94a8-c922b22a9c18",
+      "name": "Code extracter"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 11773614,
+          "mode": "list",
+          "cachedResultName": "Cold_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=11773614"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        48
+      ],
+      "id": "822e0b9b-2800-4bc3-b4cc-cfbd9ea3fb3f",
+      "name": "Get Leads",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get Leads').item.json.Email_Ids }}",
+        "subject": "test",
+        "message": "=<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>An Automation Lesson</title>\n</head>\n\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding:20px; background-color:#f4f6f8;\">\n  <tr>\n    <td align=\"center\">\n\n```\n  <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#ffffff; border-radius:8px; overflow:hidden;\">\n\n    <!-- Header -->\n    <tr>\n      <td style=\"background-color:#111827; padding:26px; text-align:center;\">\n        <h1 style=\"color:#ffffff; font-size:20px; margin:0;\">\n          Most teams don’t realize what’s slowing them down\n        </h1>\n      </td>\n    </tr>\n\n    <!-- Body -->\n    <tr>\n      <td style=\"padding:28px;\">\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin:0;\">\n          In many businesses, time isn’t lost in big problems.\n          It’s lost in small, repetitive tasks done every single day.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          Copying data between tools.\n          Sending the same follow-ups.\n          Checking dashboards that could update themselves.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          Automation doesn’t replace people.\n          It removes the busywork so people can focus on decisions that actually matter.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          Even one well-built workflow can save hours every week —\n          without changing how your team works.\n        </p>\n      </td>\n    </tr>\n\n    <!-- CTA -->\n    <tr>\n      <td style=\"padding:26px; text-align:center;\">\n        <a href=\"{{ $('Generate Pixel').item.json.webhook_url }}/{{ $('Generate Pixel').item.json.pixel }}\"\n           style=\"background-color:#4f46e5; color:#ffffff; text-decoration:none; padding:12px 26px; font-size:15px; border-radius:6px; display:inline-block;\">\n          Learn how automation works →\n        </a>\n      </td>\n    </tr>\n\n    <!-- Footer -->\n    <tr>\n      <td style=\"background-color:#111827; padding:16px; text-align:center;\">\n        <p style=\"font-size:12px; color:#9ca3af; margin:0;\">\n          You’re receiving this email because you showed interest in automation.\n        </p>\n        <p style=\"font-size:12px; margin:6px 0 0 0;\">\n          <a href=\"{{ $('Generate Pixel').item.json.unsub_url }}/{{ $('Generate Pixel').item.json.unsub_code }}\"\n             style=\"color:#9ca3af; text-decoration:underline;\">\n            Unsubscribe\n          </a>\n        </p>\n      </td>\n    </tr>\n\n  </table>\n\n</td>\n```\n\n  </tr>\n</table>\n\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        48
+      ],
+      "id": "6bc1bc0c-a35f-4653-89cf-565adc9f3503",
+      "name": "Send educational email",
+      "webhookId": "YOUR_WEBHOOK_ID_3"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "tracking_code": "={{ $json.pixel }}",
+            "Email": "={{ $('Get Leads').item.json.Email_Ids }}",
+            "edu_link_visited": "Nope",
+            "unsub_code": "={{ $json.unsub_code }}",
+            "unsubbed?": "Nope"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tracking_code",
+              "displayName": "tracking_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "edu_link_visited",
+              "displayName": "edu_link_visited",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email_recieved?",
+              "displayName": "email_recieved?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "case_study_link",
+              "displayName": "case_study_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved2?",
+              "displayName": "email_recieved2?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        768,
+        48
+      ],
+      "id": "4e7f5d2d-955a-49b4-8873-f6e79b22a670",
+      "name": "Update Leads"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b61c2bcc-83c7-4bf0-a4c9-65772f3d3164",
+              "leftValue": "={{ $json.Email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9ad90f66-0f40-4ed9-bc3c-2107f9714ce3",
+              "leftValue": "={{ $json.edu_link_visited }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "f4f67f09-4a49-4e9e-8061-53810ff09c19",
+              "leftValue": "={{ $json.case_study_link }}",
+              "rightValue": "=Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1056,
+        256
+      ],
+      "id": "17fbf576-c364-4696-9791-cfc6104ec14d",
+      "name": "If",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "test",
+        "message": "=<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Quick Intro Call</title>\n</head>\n\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding:20px; background-color:#f4f6f8;\">\n  <tr>\n    <td align=\"center\">\n\n```\n  <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#ffffff; border-radius:8px; overflow:hidden;\">\n\n    <!-- Header -->\n    <tr>\n      <td style=\"background-color:#111827; padding:26px; text-align:center;\">\n        <h1 style=\"color:#ffffff; font-size:20px; margin:0;\">\n          Open to a Short Discovery Call?\n        </h1>\n      </td>\n    </tr>\n\n    <!-- Body -->\n    <tr>\n      <td style=\"padding:28px;\">\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin:0;\">\n          Some Shopify store owners we speak with are actively\n          looking to improve parts of their operations.\n          Others are simply curious about what’s possible today.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          If you ever find value in exchanging notes or exploring\n          new ideas around store operations and customer experience,\n          a short conversation could be useful.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          No assumptions, no preparation needed —\n          just a quick chat to see if anything stands out.\n        </p>\n      </td>\n    </tr>\n\n    <!-- CTA -->\n    <tr>\n      <td style=\"padding:26px; text-align:center;\">\n        <a href=\"https://calendly.com/yourlink\" \n           style=\"background-color:#4f46e5; color:#ffffff; text-decoration:none; padding:12px 26px; font-size:15px; border-radius:6px; display:inline-block;\">\n          Book a 15-Minute Discovery Call →\n        </a>\n      </td>\n    </tr>\n\n    <!-- Footer -->\n    <tr>\n      <td style=\"background-color:#111827; padding:20px; text-align:center;\">\n        <p style=\"font-size:12px; color:#9ca3af; margin:0 0 10px 0;\">\n          © 2025 Your Company Name\n        </p>\n\n        <!-- Unsubscribe Button -->\n        <a href=\"{{ $('Generate Pixel').item.json.webhook_url }}/{{ $('Generate Pixel').item.json.unsub_code }}\"\n           style=\"background-color:#374151; color:#e5e7eb; text-decoration:none; padding:8px 18px; font-size:12px; border-radius:4px; display:inline-block;\">\n          Unsubscribe\n        </a>\n      </td>\n    </tr>\n\n  </table>\n\n</td>\n```\n\n  </tr>\n</table>\n\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1744,
+        240
+      ],
+      "id": "b7c2f3a0-2ac4-43af-9739-a0c562be58ff",
+      "name": "Send a message",
+      "webhookId": "YOUR_WEBHOOK_ID_9",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "test",
+        "message": "=<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>A Shopify Store Owner’s Story</title>\n</head>\n\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding:20px; background-color:#f4f6f8;\">\n  <tr>\n    <td align=\"center\">\n\n```\n  <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#ffffff; border-radius:8px; overflow:hidden;\">\n\n    <!-- Header -->\n    <tr>\n      <td style=\"background-color:#111827; padding:26px; text-align:center;\">\n        <h1 style=\"color:#ffffff; font-size:20px; margin:0;\">\n          A Shopify Store Owner Didn’t Expect Support to Become the Hard Part\n        </h1>\n      </td>\n    </tr>\n\n    <!-- Body -->\n    <tr>\n      <td style=\"padding:28px;\">\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin:0;\">\n          As orders increased, so did the messages.\n          Most of them were simple — order status, shipping updates, returns.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          Replies started piling up overnight.\n          Weekends quietly turned into support days.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          After setting up an AI-based support system,\n          customers began getting answers instantly —\n          without waiting for the owner to be online.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          What changed next wasn’t just response time.\n          It was how the store ran day to day.\n        </p>\n      </td>\n    </tr>\n\n    <!-- CTA -->\n    <tr>\n      <td style=\"padding:26px; text-align:center;\">\n        <a href=\"{{ $('Get base link').item.json.webhook_url }}/{{ $json.tracking_code }}\" \n           style=\"background-color:#4f46e5; color:#ffffff; text-decoration:none; padding:12px 26px; font-size:15px; border-radius:6px; display:inline-block;\">\n          Read the Full Case Study →\n        </a>\n      </td>\n    </tr>\n\n    <!-- Footer -->\n    <tr>\n      <td style=\"background-color:#111827; padding:16px; text-align:center;\">\n        <p style=\"font-size:12px; color:#9ca3af; margin:0;\">\n          © 2025 Your Company Name\n        </p>\n        <p style=\"font-size:12px; margin:6px 0 0 0;\">\n          <a href=\"{{ $('Generate Pixel').item.json.webhook_url }}/{{ $('Generate Pixel').item.json.unsub_code }}\"\n             style=\"color:#9ca3af; text-decoration:underline;\">\n            Unsubscribe\n          </a>\n        </p>\n      </td>\n    </tr>\n\n  </table>\n\n</td>\n```\n\n  </tr>\n</table>\n\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        240
+      ],
+      "id": "6b880eaf-7084-4f62-96c9-80e04e679a7e",
+      "name": "Case based email",
+      "webhookId": "YOUR_WEBHOOK_ID_10",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "91bc6b7f-f540-4530-86a5-f3404cb77645",
+              "name": "webhook_url",
+              "value": "YOUR_NGROK_OR_WEBHOOK_BASE_URL/webhook/YOUR_WEBHOOK_ID_7/casestudy",
+              "type": "string"
+            },
+            {
+              "id": "0e10d0fb-7f2d-4976-9d5e-dc04fc6731e6",
+              "name": "unsub_url",
+              "value": "YOUR_NGROK_OR_WEBHOOK_BASE_URL/webhook-test/YOUR_WEBHOOK_ID_7/unsub_code",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        48
+      ],
+      "id": "eb443071-8aee-4831-9886-e66cb992f30e",
+      "name": "Get base link"
+    },
+    {
+      "parameters": {
+        "path": "casestudy/:code",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        2208,
+        48
+      ],
+      "id": "c409c6a7-7fc2-4380-af9e-b6e323f8e90f",
+      "name": "Webhook1",
+      "webhookId": "YOUR_WEBHOOK_ID_7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "da08e436-d216-4152-850c-fcbb301d36ff",
+              "name": "params.code",
+              "value": "={{ $json.params.code }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2656,
+        48
+      ],
+      "id": "7fed4bc3-28f3-40ff-a01a-a66727176697",
+      "name": "Code extracter1"
+    },
+    {
+      "parameters": {
+        "respondWith": "redirect",
+        "redirectURL": "your_landing_page_url_or_relevant_link",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2432,
+        48
+      ],
+      "id": "c0ced6c3-05b4-4de5-9384-d1c8ab00e1fb",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1664,
+        48
+      ],
+      "id": "22e4c8a9-2455-46d1-a3ba-82db9392554d",
+      "name": "Get Leads1",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 24
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 896076270,
+          "mode": "list",
+          "cachedResultName": "Announcements",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=896076270"
+        },
+        "event": "rowUpdate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        2176,
+        688
+      ],
+      "id": "7b63d88e-fc99-4ace-b7fc-11425cda0410",
+      "name": "Google Sheets Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "tracking_code": "={{ $json.params.code }}",
+            "case_study_link": "Yes"
+          },
+          "matchingColumns": [
+            "tracking_code"
+          ],
+          "schema": [
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "tracking_code",
+              "displayName": "tracking_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "edu_link_visited",
+              "displayName": "edu_link_visited",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved?",
+              "displayName": "email_recieved?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "case_study_link",
+              "displayName": "case_study_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email_recieved2?",
+              "displayName": "email_recieved2?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "meeting_code",
+              "displayName": "meeting_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "booking_status",
+              "displayName": "booking_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2880,
+        48
+      ],
+      "id": "32a41cc0-f367-4d69-ba46-baab51a84122",
+      "name": "Update Row1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json.Emails}}",
+        "subject": "test",
+        "message": "={{$json.Announcements}}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        688
+      ],
+      "id": "a21532dc-4b10-4200-b420-d1845e3cdc87",
+      "name": "Send announcements",
+      "webhookId": "YOUR_WEBHOOK_ID_14"
+    },
+    {
+      "parameters": {
+        "content": "## Cold Leads Automation\n",
+        "height": 400,
+        "width": 2080,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "ab62d68b-29ee-49f1-b428-9f09165a1c47",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1880206539,
+          "mode": "list",
+          "cachedResultName": "Long_term",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1880206539"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Emails": "={{$json.Email}}"
+          },
+          "matchingColumns": [
+            "Emails"
+          ],
+          "schema": [
+            {
+              "id": "Emails",
+              "displayName": "Emails",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        272
+      ],
+      "id": "2635f6c3-387a-4150-8016-345ae6a5f4a2",
+      "name": "Update emails"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        544,
+        240
+      ],
+      "id": "d32e3664-61f3-4b67-bc4c-38cf9fec6ef0",
+      "name": "Get leads",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1880206539,
+          "mode": "list",
+          "cachedResultName": "Long_term",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1880206539"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2400,
+        688
+      ],
+      "id": "bdd7da04-ecfd-4648-a0d2-2c256b9e583e",
+      "name": "Get Cold Leads",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "content": "## Link tracker\n",
+        "height": 400,
+        "width": 1872,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2112,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "cf53287a-798b-45cc-800b-c53d848cf58b",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Long Term Drip\n",
+        "height": 224,
+        "width": 672,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2112,
+        624
+      ],
+      "typeVersion": 1,
+      "id": "10564210-ec63-4c22-940b-fd9ffb9b8bf9",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        992
+      ],
+      "id": "a5df5bb8-d363-451d-b38f-9b528c63387f",
+      "name": "Get warm leads",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Google Sheets Trigger2').item.json.Lead_firstName }}, {{ $('Google Sheets Trigger2').item.json.Lead_lastName }}, {{ $('Google Sheets Trigger2').item.json.Company_Name }}, {{ $('Google Sheets Trigger2').item.json.Industry }}, {{ $('Google Sheets Trigger2').item.json.Position }}, {{ $('Google Sheets Trigger2').item.json.Problem }}",
+        "options": {
+          "systemMessage": "=## Overview\n\nYou are a world-class Sales Strategist and Copywriter specializing in \"High-Relevance Outreach.\" Your goal is to write a 1:1 personalized email that feels like it was written by a human, not a bot. Use your thinking capability to analyze the data points provided and find a non-obvious \"hook.\"\n\n## Task\n- Analyze: Review the [Prospect Data] and [My Offerings] sections.\n- Reasoning Phase:\n1. Position Check: If the Lead is an Executive, focus on revenue/growth. If they are Mid-management, focus on efficiency.\n2. The \"Friend Complaint\" Filter: Based on the [Pain Point] and [Company Niche], brainstorm how the buyer would complain to a friend about their problem. Avoid corporate speak like \"leverage\" or \"optimize.\"\n\n## Drafting Guidelines:\n\n- Greeting: Always start with \"Hi [Name],\" on its own line.\n- The Hook: Start with a \"clean\" version of the company name (remove LLC, Inc, etc.).\n- Structure: Use a 3-block layout with a full line of space between the greeting, the body, the CTA, and the sign-off (with calley).\n- Tone: Professional but conversational. Write like a peer, not a salesperson.\n- The CTA: Use a low-friction, \"interest-based\" Call to Action (e.g., \"Worth a look?\" or \"Open to a 15 minute chat on this?\"). \n\n## Output Constraints\n- Format: You MUST return exactly 4 paragraphs (Greeting, Body, CTA, Sign-off) with double line spacing between them.\n- Length: Maximum 125 words; no more than 4 sentences total.\n- Subject Line: No subject.\n- No use of emojis and em dashes.\n- Use this link: {{ $('Edit Fields5').item.json.webhook_url }}/{{ $('Edit Fields5').item.json.unsub_code_warm }}, for the unsubscribe button.\n- It should in HTML. For example - \"<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n            color: #333333;\n            margin: 0;\n            padding: 20px;\n        }\n        .container {\n            max-width: 600px;\n            margin: auto;\n            background: #ffffff;\n        }\n        .footer {\n            margin-top: 30px;\n            padding-top: 20px;\n            border-top: 1px solid #eeeeee;\n            font-size: 12px;\n            color: #888888;\n        }\n        .cta-button {\n            display: inline-block;\n            padding: 10px 20px;\n            color: #ffffff;\n            background-color: #007bff;\n            text-decoration: none;\n            border-radius: 5px;\n            margin-top: 15px;\n        }\n        a {\n            color: #007bff;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <p>Hi <strong>{{first_name}}</strong>,</p>\n\n        <p>I was recently looking at <strong>{{company_name}}</strong> and noticed you’re currently scaling your outreach. I was curious—how is your team handling the follow-up for new leads coming in through your website?</p>\n\n        <p>I’ve developed an AI-driven automation that bridges the gap between your lead forms and your CRM. It ensures that every inquiry gets a personalized response within 60 seconds, which typically boosts conversion rates by about 30% without any extra manual work from your staff.</p>\n\n        <p>I’d love to send over a brief video showing exactly how this could work for your specific workflow. Would you be open to seeing it?</p>\n\n        <p>Best regards,<br>\n        <strong>{{your_name}}</strong><br>\n        {{agency_name}}</p>\n\n        <div class=\"footer\">\n            <p>You received this email because we thought it would be relevant to your work at {{company_name}}.</p>\n            <p>\n                {{address}}<br>\n                If you'd rather not hear from me again, you can \n                <a href=\"{{unsubscribe_url}}\">unsubscribe here</a>.\n            </p>\n        </div>\n    </div>\n</body>\n</html>\". This is just an example the real email will use the given fields to personalize the final email.\n\n## My Offerings\n\n- AI chatbot automation for ecom businesses to increace customer interaction by 30%\n\n## Prospect Data\n\nName: {{ $('Get warm leads').item.json.Lead_firstName }} {{ $('Get warm leads').item.json.Lead_lastName }}\n\nPosition/Title: {{ $('Get warm leads').item.json.Position }}\n\nCompany Name: {{ $('Get warm leads').item.json.Company_Name }}\n\nCompany Niche: {{ $('Get warm leads').item.json.Industry }}\n\nPain Point: {{ $('Get warm leads').item.json.Problem }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        944,
+        992
+      ],
+      "id": "3375dfdd-4567-481b-82d4-b2fc6d7a7194",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        944,
+        1120
+      ],
+      "id": "cd7d10db-ec6b-49df-8f26-3fadc0d8ad8e",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "unit": "minutes"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 11773614,
+          "mode": "list",
+          "cachedResultName": "Cold_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=11773614"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        80,
+        48
+      ],
+      "id": "f825c287-5175-48e9-8861-d43e4479200a",
+      "name": "Google Sheets Trigger1"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003342005959",
+        "text": "={{ $('Get many messages').item.json.snippet }} - {{ $('Get many messages').item.json.From }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3344,
+        928
+      ],
+      "id": "0a43bbb7-7873-4543-9bb4-e5a58cdfc734",
+      "name": "Send a text message",
+      "webhookId": "YOUR_WEBHOOK_ID_4"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get row(s) in sheet1').item.json.Lead_Email }}",
+        "subject": "A quick thought on budget concerns",
+        "message": "=<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>On Budget Concerns</title>\n</head>\n\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding:20px; background-color:#f4f6f8;\">\n  <tr>\n    <td align=\"center\">\n\n```\n  <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#ffffff; border-radius:8px; overflow:hidden;\">\n\n    <!-- Header -->\n    <tr>\n      <td style=\"background-color:#111827; padding:26px; text-align:center;\">\n        <h1 style=\"color:#ffffff; font-size:20px; margin:0;\">\n          “It sounds good, but the cost is a concern”\n        </h1>\n      </td>\n    </tr>\n\n    <!-- Body -->\n    <tr>\n      <td style=\"padding:28px;\">\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin:0;\">\n          That’s one of the most common and reasonable concerns we hear.\n          Budget matters — especially when every expense competes with growth.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          What’s often overlooked is the cost of *not* fixing inefficient workflows:\n          time spent on manual tasks, delayed responses, missed follow-ups,\n          and processes that quietly drain hours every week.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          Most automation projects aren’t about adding another expense.\n          They’re about removing friction — so the same team can do more\n          without working longer hours.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          Even small improvements often pay for themselves faster than expected.\n          And if it doesn’t make financial sense, it’s usually not worth doing.\n        </p>\n      </td>\n    </tr>\n\n    <!-- CTA -->\n    <tr>\n      <td style=\"padding:26px; text-align:center;\">\n        <a href=\"https://calendly.com/yourlink\"\n           style=\"background-color:#4f46e5; color:#ffffff; text-decoration:none; padding:12px 26px; font-size:15px; border-radius:6px; display:inline-block;\">\n          Talk it through for 15 minutes →\n        </a>\n      </td>\n    </tr>\n\n    <!-- Footer -->\n    <tr>\n      <td style=\"background-color:#111827; padding:20px; text-align:center;\">\n        <p style=\"font-size:12px; color:#9ca3af; margin:0 0 10px 0;\">\n          © 2025 Your Company Name\n        </p>\n\n        <!-- Unsubscribe Button -->\n        <a href=\"{{ $('Edit Fields5').item.json.webhook_url }}/{{ $('Edit Fields5').item.json.unsub_code_warm }}\"\n           style=\"background-color:#374151; color:#e5e7eb; text-decoration:none; padding:8px 18px; font-size:12px; border-radius:4px; display:inline-block;\">\n          Unsubscribe\n        </a>\n      </td>\n    </tr>\n\n  </table>\n\n</td>\n```\n\n  </tr>\n</table>\n\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3344,
+        1136
+      ],
+      "id": "ffdb3110-90fd-486d-a448-89a2cc44374c",
+      "name": "Objection Handling mail",
+      "webhookId": "YOUR_WEBHOOK_ID_13"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "22cdea38-b48e-4991-b6be-9a5c0e9ace08",
+              "leftValue": "={{ $('Get warm leads').item.json.Lead_Email }}",
+              "rightValue": "={{ $json.emails }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        528,
+        1328
+      ],
+      "id": "99a7c54f-1b78-4671-943a-3e2e0637eca6",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get row(s) in sheet4').item.json.Lead_Email }}",
+        "subject": "Subject: Is timing the real concern?",
+        "message": "=<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>On Timing</title>\n</head>\n\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding:20px; background-color:#f4f6f8;\">\n  <tr>\n    <td align=\"center\">\n\n```\n  <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#ffffff; border-radius:8px; overflow:hidden;\">\n\n    <!-- Header -->\n    <tr>\n      <td style=\"background-color:#111827; padding:26px; text-align:center;\">\n        <h1 style=\"color:#ffffff; font-size:20px; margin:0;\">\n          “Now isn’t the right time”\n        </h1>\n      </td>\n    </tr>\n\n    <!-- Body -->\n    <tr>\n      <td style=\"padding:28px;\">\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin:0;\">\n          This is another very reasonable concern.\n          Most teams are busy, and adding anything new can feel disruptive.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          What we often see, though, is that “later” usually means\n          continuing to work around the same bottlenecks for months.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          The goal of automation isn’t to slow things down.\n          It’s to quietly remove friction — without changing how your team operates day to day.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          Even small adjustments, done at the right pace,\n          can make busy periods feel a lot more manageable.\n        </p>\n      </td>\n    </tr>\n\n    <!-- CTA -->\n    <tr>\n      <td style=\"padding:26px; text-align:center;\">\n        <a href=\"https://calendly.com/yourlink\"\n           style=\"background-color:#4f46e5; color:#ffffff; text-decoration:none; padding:12px 26px; font-size:15px; border-radius:6px; display:inline-block;\">\n          Have a low-pressure chat →\n        </a>\n      </td>\n    </tr>\n\n    <!-- Footer -->\n    <tr>\n      <td style=\"background-color:#111827; padding:20px; text-align:center;\">\n        <p style=\"font-size:12px; color:#9ca3af; margin:0 0 10px 0;\">\n          © 2025 Your Company Name\n        </p>\n        <a href=\"{{ $('Edit Fields5').item.json.webhook_url }}/{{ $('Edit Fields5').item.json.unsub_code_warm }}\"\n           style=\"background-color:#374151; color:#e5e7eb; text-decoration:none; padding:8px 18px; font-size:12px; border-radius:4px; display:inline-block;\">\n          Unsubscribe\n        </a>\n      </td>\n    </tr>\n\n  </table>\n\n</td>\n```\n\n  </tr>\n</table>\n\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1392,
+        1456
+      ],
+      "id": "7a7c0241-7a02-4f8e-bca1-1cabdca1dbfd",
+      "name": "Objection Handling mail1",
+      "webhookId": "YOUR_WEBHOOK_ID_13"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get row(s) in sheet5').item.json.Lead_Email }}",
+        "subject": "test",
+        "message": "=<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Quick Intro Call</title>\n</head>\n\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding:20px; background-color:#f4f6f8;\">\n  <tr>\n    <td align=\"center\">\n\n```\n  <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#ffffff; border-radius:8px; overflow:hidden;\">\n\n    <!-- Header -->\n    <tr>\n      <td style=\"background-color:#111827; padding:26px; text-align:center;\">\n        <h1 style=\"color:#ffffff; font-size:20px; margin:0;\">\n          Open to a Short Discovery Call?\n        </h1>\n      </td>\n    </tr>\n\n    <!-- Body -->\n    <tr>\n      <td style=\"padding:28px;\">\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin:0;\">\n          Some Shopify store owners we speak with are actively\n          looking to improve parts of their operations.\n          Others are simply curious about what’s possible today.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          If you ever find value in exchanging notes or exploring\n          new ideas around store operations and customer experience,\n          a short conversation could be useful.\n        </p>\n\n        <p style=\"font-size:15px; color:#374151; line-height:1.6; margin-top:12px;\">\n          No assumptions, no preparation needed —\n          just a quick chat to see if anything stands out.\n        </p>\n      </td>\n    </tr>\n\n    <!-- CTA -->\n    <tr>\n      <td style=\"padding:26px; text-align:center;\">\n        <a href=\"https://calendly.com/yourlink\" \n           style=\"background-color:#4f46e5; color:#ffffff; text-decoration:none; padding:12px 26px; font-size:15px; border-radius:6px; display:inline-block;\">\n          Book a 15-Minute Discovery Call →\n        </a>\n      </td>\n    </tr>\n\n    <!-- Footer -->\n    <tr>\n      <td style=\"background-color:#111827; padding:20px; text-align:center;\">\n        <p style=\"font-size:12px; color:#9ca3af; margin:0 0 10px 0;\">\n          © 2025 Your Company Name\n        </p>\n\n        <!-- Unsubscribe Button -->\n        <a href=\"{{ $('Edit Fields5').item.json.webhook_url }}/{{ $('Edit Fields5').item.json.unsub_code_warm }}\"\n           style=\"background-color:#374151; color:#e5e7eb; text-decoration:none; padding:8px 18px; font-size:12px; border-radius:4px; display:inline-block;\">\n          Unsubscribe\n        </a>\n      </td>\n    </tr>\n\n  </table>\n\n</td>\n```\n\n  </tr>\n</table>\n\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3216,
+        1552
+      ],
+      "id": "4823c8fe-59c5-4ccb-9216-38869156fe76",
+      "name": "Send a message1",
+      "webhookId": "YOUR_WEBHOOK_ID_9",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "content": "## Warm Leads\n",
+        "height": 1104,
+        "width": 4000,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        896
+      ],
+      "typeVersion": 1,
+      "id": "4aeb0653-5575-4b26-915e-d32caf4159c9",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead_Email": "={{ $('Edit Fields').item.json.emails }}",
+            "Replied?": "Yes"
+          },
+          "matchingColumns": [
+            "Lead_Email"
+          ],
+          "schema": [
+            {
+              "id": "Lead_firstName",
+              "displayName": "Lead_firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_lastName",
+              "displayName": "Lead_lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_Email",
+              "displayName": "Lead_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Problem",
+              "displayName": "Problem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Meeting booked?",
+              "displayName": "Meeting booked?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Obejction",
+              "displayName": "Obejction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction1",
+              "displayName": "Obejction1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3120,
+        928
+      ],
+      "id": "a52f478e-51b0-40b4-8bfc-5ba0a3270f47",
+      "name": "Append or update row in sheet"
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1216,
+        48
+      ],
+      "id": "b540d27f-c4c5-4dc9-aa79-3528825d4b77",
+      "name": "Wait",
+      "webhookId": "YOUR_WEBHOOK_ID_15"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        240
+      ],
+      "id": "d22f3038-e481-4396-8814-ace11dbcc5c6",
+      "name": "Wait3",
+      "webhookId": "YOUR_WEBHOOK_ID_16"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        608
+      ],
+      "id": "44b66aa3-eaf6-4237-95da-29e79bb49b2c",
+      "name": "Gmail Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        496,
+        608
+      ],
+      "id": "2a07b6e4-2271-4b81-9a5e-a102fa72428f",
+      "name": "Get row(s) in sheet",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "06c01040-aa4d-4589-a246-04deb2747166",
+              "leftValue": "={{ $('Get row(s) in sheet').item.json.Email }}",
+              "rightValue": "={{ $json.Email }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        608
+      ],
+      "id": "cadf57a7-4fcd-4c84-ae34-6d0464fa9059",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9abac5f0-60e7-4d21-a35a-d8cb28c4615d",
+              "leftValue": "={{ $json.Email }}",
+              "rightValue": "={{ $('Edit Fields4').item.json.from_gmail }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        608
+      ],
+      "id": "64c5d506-5ddc-4209-b3a8-9bd607254e2d",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json.Email }}",
+            "email_recieved?": "Yes"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tracking_code",
+              "displayName": "tracking_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "edu_link_visited",
+              "displayName": "edu_link_visited",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved?",
+              "displayName": "email_recieved?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "case_study_link",
+              "displayName": "case_study_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved2?",
+              "displayName": "email_recieved2?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1376,
+        480
+      ],
+      "id": "94263c08-e912-4ce3-a03d-fd2f671a9249",
+      "name": "Append or update row in sheet1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d623ef92-88ac-4183-9aac-91273e0e2275",
+              "leftValue": "={{ $('Get row(s) in sheet').item.json.edu_link_visited }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1168,
+        576
+      ],
+      "id": "49dc3bde-5897-4477-aab1-6c9421cca473",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2cc455f0-75e6-4b06-a483-e1254e359199",
+              "leftValue": "={{ $('Get row(s) in sheet').item.json.case_study_link }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1376,
+        672
+      ],
+      "id": "521330b8-63ac-438e-9e18-9fbed82fe489",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $('Filter').item.json.Email }}",
+            "email_recieved2?": "Yes"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tracking_code",
+              "displayName": "tracking_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "edu_link_visited",
+              "displayName": "edu_link_visited",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved?",
+              "displayName": "email_recieved?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "case_study_link",
+              "displayName": "case_study_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved2?",
+              "displayName": "email_recieved2?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1600,
+        656
+      ],
+      "id": "9f56c0c9-a267-45c3-b032-1ba46796338e",
+      "name": "Append or update row in sheet2"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003342005959",
+        "text": "={{ $('Gmail Trigger').item.json.snippet }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1600,
+        480
+      ],
+      "id": "1ed071fc-0e04-45b3-bf0e-1937f048a53b",
+      "name": "Alert team",
+      "webhookId": "YOUR_WEBHOOK_ID_20"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003342005959",
+        "text": "={{ $('Gmail Trigger').item.json.snippet }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1808,
+        480
+      ],
+      "id": "9db473bc-ca61-422e-9e9a-4e78863c4032",
+      "name": "Alert Team",
+      "webhookId": "YOUR_WEBHOOK_ID_20"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003342005959",
+        "text": "={{ $('Gmail Trigger').item.json.snippet }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1808,
+        688
+      ],
+      "id": "f633b2c4-6785-4faf-93f5-b42f01e1176e",
+      "name": "Alert team1",
+      "webhookId": "YOUR_WEBHOOK_ID_20"
+    },
+    {
+      "parameters": {
+        "content": "## Recieved email\n",
+        "height": 400,
+        "width": 2000,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        448
+      ],
+      "typeVersion": 1,
+      "id": "4dfe9b34-1f55-46ea-a065-b1d6d3c2c80a",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get warm leads').item.json.Lead_Email }}",
+        "subject": "abc customer engagement",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        992
+      ],
+      "id": "477fffca-ec1c-4fc6-83a1-75d6642988d7",
+      "name": "Send a message2",
+      "webhookId": "YOUR_WEBHOOK_ID_11"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        992
+      ],
+      "id": "b84eae9d-a9cd-4682-9c12-71537c79a2c1",
+      "name": "Wait1",
+      "webhookId": "YOUR_WEBHOOK_ID_17"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "filters": {
+          "readStatus": "unread",
+          "sender": "={{ $('Get warm leads').item.json.Lead_Email }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2192,
+        992
+      ],
+      "id": "1d276de6-8c08-4ecd-a0a1-6c1fd846f159",
+      "name": "Get many messages",
+      "webhookId": "YOUR_WEBHOOK_ID_12",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9afd08e5-e890-4cf2-8b80-88958fc09f98",
+              "name": "emails",
+              "value": "={{ $json.From.match(/<(.+?)>/)?.[1] || $json.From }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2416,
+        992
+      ],
+      "id": "d30e93b1-1aeb-4bba-8735-dbc557c3bf5d",
+      "name": "Edit Fields",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "09624edf-29c7-4ce3-8fbf-1ab6461b2876",
+              "leftValue": "={{ $('Get warm leads').item.json.Lead_Email }}",
+              "rightValue": "={{ $json.emails }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2896,
+        976
+      ],
+      "id": "e2a89eff-8d41-45eb-9fda-8a00fce56c95",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3568,
+        1136
+      ],
+      "id": "077ad2ee-fee6-49ce-87fb-e33ec362ceab",
+      "name": "Wait2",
+      "webhookId": "YOUR_WEBHOOK_ID_18"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "filters": {
+          "readStatus": "unread",
+          "sender": "={{ $('Get warm leads').item.json.Lead_Email }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3792,
+        1136
+      ],
+      "id": "304b8c0c-5a8c-4495-96c2-b576eefdfbf6",
+      "name": "Get many messages1",
+      "webhookId": "YOUR_WEBHOOK_ID_12",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9afd08e5-e890-4cf2-8b80-88958fc09f98",
+              "name": "emails",
+              "value": "={{ $json.From.match(/<(.+?)>/)?.[1] || $json.From }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        64,
+        1408
+      ],
+      "id": "8add1e4c-3ebc-47ef-bbb4-1ba897de2467",
+      "name": "Edit Fields1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "chatId": "-1003342005959",
+        "text": "={{ $('Get many messages').item.json.snippet }} - {{ $('Get many messages').item.json.From }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1168,
+        1248
+      ],
+      "id": "7f3185b6-aba7-4cef-a56d-24bb5f8ff217",
+      "name": "Send a text message1",
+      "webhookId": "YOUR_WEBHOOK_ID_4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead_Email": "={{ $('Edit Fields').item.json.emails }}",
+            "Replied?": "Yes"
+          },
+          "matchingColumns": [
+            "Lead_Email"
+          ],
+          "schema": [
+            {
+              "id": "Lead_firstName",
+              "displayName": "Lead_firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_lastName",
+              "displayName": "Lead_lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_Email",
+              "displayName": "Lead_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Problem",
+              "displayName": "Problem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Meeting booked?",
+              "displayName": "Meeting booked?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Obejction",
+              "displayName": "Obejction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction1",
+              "displayName": "Obejction1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        944,
+        1248
+      ],
+      "id": "20c05096-d672-4c8a-9a2e-be43cc86ffb9",
+      "name": "Append or update row in sheet3"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1744,
+        992
+      ],
+      "id": "b872c8a3-b98c-4a6c-9e59-e66c9f3f923a",
+      "name": "Get row(s) in sheet1",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "46db2fa0-79ab-4c41-9a31-2178ca88febe",
+              "leftValue": "={{ $json['Meeting booked?'] }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1968,
+        992
+      ],
+      "id": "720c1d3b-65ea-4763-a797-7042bbc31c8c",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "22cdea38-b48e-4991-b6be-9a5c0e9ace08",
+              "leftValue": "={{ $('Get warm leads').item.json.Lead_Email }}",
+              "rightValue": "={{ $json.emails }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2544,
+        1392
+      ],
+      "id": "6af5baf2-366f-4d56-835d-e0898fe34f65",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1616,
+        1456
+      ],
+      "id": "2f85e8db-a0e5-45e1-a163-2bc7eaf398fe",
+      "name": "Wait4",
+      "webhookId": "YOUR_WEBHOOK_ID_18"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "filters": {
+          "readStatus": "unread",
+          "sender": "={{ $('Get warm leads').item.json.Lead_Email }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1872,
+        1456
+      ],
+      "id": "24b9f06e-4468-4dfb-a346-57f9db8eac5a",
+      "name": "Get many messages2",
+      "webhookId": "YOUR_WEBHOOK_ID_12",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9afd08e5-e890-4cf2-8b80-88958fc09f98",
+              "name": "emails",
+              "value": "={{ $json.From.match(/<(.+?)>/)?.[1] || $json.From }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2096,
+        1456
+      ],
+      "id": "73eedebe-5322-4d2f-9b1d-cc72b3154a5c",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003342005959",
+        "text": "={{ $('Get many messages').item.json.snippet }} - {{ $('Get many messages').item.json.From }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3024,
+        1280
+      ],
+      "id": "f7dfb4e4-de1d-47b8-badc-64b363a60928",
+      "name": "Send a text message3",
+      "webhookId": "YOUR_WEBHOOK_ID_4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead_Email": "={{ $('Edit Fields').item.json.emails }}",
+            "Replied?": "Yes"
+          },
+          "matchingColumns": [
+            "Lead_Email"
+          ],
+          "schema": [
+            {
+              "id": "Lead_firstName",
+              "displayName": "Lead_firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_lastName",
+              "displayName": "Lead_lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_Email",
+              "displayName": "Lead_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Problem",
+              "displayName": "Problem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Meeting booked?",
+              "displayName": "Meeting booked?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Obejction",
+              "displayName": "Obejction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction1",
+              "displayName": "Obejction1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2800,
+        1280
+      ],
+      "id": "3779ff85-8a6a-448b-8994-304e7049fc1f",
+      "name": "Append or update row in sheet4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "22cdea38-b48e-4991-b6be-9a5c0e9ace08",
+              "leftValue": "={{ $('Get warm leads').item.json.Lead_Email }}",
+              "rightValue": "={{ $json.emails }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        576,
+        1664
+      ],
+      "id": "12eb0533-ab63-48c1-96c5-4ed10c2fb0b5",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "filters": {
+          "readStatus": "unread",
+          "sender": "={{ $('Get warm leads').item.json.Lead_Email }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3664,
+        1552
+      ],
+      "id": "4c9075e2-4816-4585-b165-71b36aacb528",
+      "name": "Get many messages3",
+      "webhookId": "YOUR_WEBHOOK_ID_12",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9afd08e5-e890-4cf2-8b80-88958fc09f98",
+              "name": "emails",
+              "value": "={{ $json.From.match(/<(.+?)>/)?.[1] || $json.From }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        1728
+      ],
+      "id": "65dd5cc0-baed-4905-a8e6-24f50b1d6bf6",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003342005959",
+        "text": "={{ $('Get many messages').item.json.snippet }} - {{ $('Get many messages').item.json.From }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1024,
+        1616
+      ],
+      "id": "82b5e59b-e02b-45bf-b75b-a7487c5fad43",
+      "name": "Send a text message4",
+      "webhookId": "YOUR_WEBHOOK_ID_4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead_Email": "={{ $('Edit Fields').item.json.emails }}",
+            "Replied?": "Yes"
+          },
+          "matchingColumns": [
+            "Lead_Email"
+          ],
+          "schema": [
+            {
+              "id": "Lead_firstName",
+              "displayName": "Lead_firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_lastName",
+              "displayName": "Lead_lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_Email",
+              "displayName": "Lead_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Problem",
+              "displayName": "Problem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Meeting booked?",
+              "displayName": "Meeting booked?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Obejction",
+              "displayName": "Obejction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction1",
+              "displayName": "Obejction1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        800,
+        1616
+      ],
+      "id": "0e14324e-7016-4fb3-8bac-21cdec3879b6",
+      "name": "Append or update row in sheet5"
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3440,
+        1552
+      ],
+      "id": "bdf7eef2-6272-452b-b4ad-69d6339ce309",
+      "name": "Wait5",
+      "webhookId": "YOUR_WEBHOOK_ID_19"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1880206539,
+          "mode": "list",
+          "cachedResultName": "Long_term",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1880206539"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Emails": "={{$json.emails}}"
+          },
+          "matchingColumns": [
+            "Emails"
+          ],
+          "schema": [
+            {
+              "id": "Emails",
+              "displayName": "Emails",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        800,
+        1824
+      ],
+      "id": "ed1a4ccc-a2f2-43e2-8e1f-dc1818dec7b1",
+      "name": "Append or update row in sheet6"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "unit": "minutes"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "event": "rowUpdate",
+        "options": {
+          "columnsToWatch": [
+            "Lead_Email"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        992
+      ],
+      "id": "c4db57e2-229e-46b3-aa0e-0349a439f633",
+      "name": "Google Sheets Trigger2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        2288,
+        480
+      ],
+      "id": "503e04a5-4857-460b-8f7d-a52afaf36dcf",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "YOUR_NOTIFICATION_EMAIL@example.com",
+        "subject": "Error notification",
+        "message": "=Workflow Name: {{$json.workflow.name}}\n\nError: {{ $json.trigger.error.message }}\nname: {{ $json.trigger.error.name }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2496,
+        480
+      ],
+      "id": "a434e37b-0fe4-46bc-a9a6-d738f17ea038",
+      "name": "Send a message3",
+      "webhookId": "YOUR_WEBHOOK_ID_5"
+    },
+    {
+      "parameters": {
+        "content": "## Error Handling\n",
+        "width": 672,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2112,
+        448
+      ],
+      "typeVersion": 1,
+      "id": "9e15c8d9-e5ea-4997-a618-97f85a8f3299",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "da08e436-d216-4152-850c-fcbb301d36ff",
+              "name": "params.code",
+              "value": "={{ $json.params.code }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3536,
+        48
+      ],
+      "id": "36daeb48-efd4-4c88-8fbf-65b5e4e9859f",
+      "name": "Code extracter2"
+    },
+    {
+      "parameters": {
+        "respondWith": "redirect",
+        "redirectURL": "your_landing_page_url_or_relevant_link",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        3328,
+        48
+      ],
+      "id": "335be5eb-da1d-431c-b458-fc73a516d1ac",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "link_tracking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "unsub_code": "={{ $json.params.code }}",
+            "unsubbed?": "Yes"
+          },
+          "matchingColumns": [
+            "unsub_code"
+          ],
+          "schema": [
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "tracking_code",
+              "displayName": "tracking_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "edu_link_visited",
+              "displayName": "edu_link_visited",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved?",
+              "displayName": "email_recieved?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "case_study_link",
+              "displayName": "case_study_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email_recieved2?",
+              "displayName": "email_recieved2?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "meeting_code",
+              "displayName": "meeting_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "booking_status",
+              "displayName": "booking_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3760,
+        48
+      ],
+      "id": "e260a9bb-7bf2-45be-a43e-c22ad1c126ec",
+      "name": "Update Row2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "38e47fe8-a49d-464a-9771-09f54f53347e",
+              "name": "=from_gmail",
+              "value": "={{ $json.From.match(/<(.+?)>/)?.[1] || $json.From }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        272,
+        608
+      ],
+      "id": "e576057e-2bda-4768-8045-f9fba9ab09bb",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee8ded84-b27e-44d1-82a8-d4011dea3253",
+              "name": "unsub_code_warm",
+              "value": "={{ Array.from({length: 10}, () => Math.random().toString(36).charAt(2)).join('') + '+' + Array.from({length: 10}, () => Math.random().toString(36).charAt(2)).join('') }}",
+              "type": "string"
+            },
+            {
+              "id": "4855f726-652f-442c-81b1-4406d5f2429f",
+              "name": "webhook_url",
+              "value": "YOUR_NGROK_OR_WEBHOOK_BASE_URL/webhook/YOUR_WEBHOOK_ID_6/unsub_code_warm",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        496,
+        992
+      ],
+      "id": "f72ae4b8-e6d3-40fe-aa6c-d198024416da",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "da08e436-d216-4152-850c-fcbb301d36ff",
+              "name": "params.code",
+              "value": "={{ $json.params.code }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3536,
+        224
+      ],
+      "id": "7c2c3b1f-c434-49d9-b246-84451840cb2c",
+      "name": "Code extracter3"
+    },
+    {
+      "parameters": {
+        "respondWith": "redirect",
+        "redirectURL": "your_landing_page_url_or_relevant_link",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        3328,
+        224
+      ],
+      "id": "9569e427-a439-4302-9e81-1c8fad1cea8e",
+      "name": "Respond to Webhook3"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "unsub_code": "={{ $json.params.code }}",
+            "unsubbed?": "Yes"
+          },
+          "matchingColumns": [
+            "unsub_code"
+          ],
+          "schema": [
+            {
+              "id": "Lead_firstName",
+              "displayName": "Lead_firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_lastName",
+              "displayName": "Lead_lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_Email",
+              "displayName": "Lead_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Problem",
+              "displayName": "Problem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Meeting booked?",
+              "displayName": "Meeting booked?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction",
+              "displayName": "Obejction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction1",
+              "displayName": "Obejction1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3760,
+        224
+      ],
+      "id": "1144ddac-0474-41fe-81ac-ee762bd46657",
+      "name": "Update Row3"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead_Email": "={{ $('Get warm leads').item.json.Lead_Email }}",
+            "unsub_code": "={{ $json.unsub_code_warm }}"
+          },
+          "matchingColumns": [
+            "Lead_Email"
+          ],
+          "schema": [
+            {
+              "id": "Lead_firstName",
+              "displayName": "Lead_firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_lastName",
+              "displayName": "Lead_lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Lead_Email",
+              "displayName": "Lead_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Problem",
+              "displayName": "Problem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Meeting booked?",
+              "displayName": "Meeting booked?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction",
+              "displayName": "Obejction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Obejction1",
+              "displayName": "Obejction1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Replied?",
+              "displayName": "Replied?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "unsub_code",
+              "displayName": "unsub_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "unsubbed?",
+              "displayName": "unsubbed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        720,
+        992
+      ],
+      "id": "7adc329a-185f-43b4-83dd-880ef4218d32",
+      "name": "Append or update row in sheet7"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3184,
+        464
+      ],
+      "id": "a4e37bd6-3ad8-406e-93b4-7331a4a17a58",
+      "name": "Get row(s) in sheet2",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5b2ef2ec-6c8b-4dd5-b245-fcde42520001",
+              "leftValue": "={{ $json['unsubbed?'] }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3408,
+        464
+      ],
+      "id": "3ba0dcac-638d-409a-9851-854da2b9b214",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "startIndex": "={{ $json.row_number }}"
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3632,
+        464
+      ],
+      "id": "35e6fa70-1f48-46af-b2af-8f15f49e5e79",
+      "name": "Delete rows or columns from sheet"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3184,
+        656
+      ],
+      "id": "78737d06-c210-45f9-adc2-19e7856fe4fd",
+      "name": "Get row(s) in sheet3",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5b2ef2ec-6c8b-4dd5-b245-fcde42520001",
+              "leftValue": "={{ $json['unsubbed?'] }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3408,
+        656
+      ],
+      "id": "d8cf9633-0259-440e-831e-7ef568658be9",
+      "name": "If10"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "startIndex": "={{ $json.row_number }}"
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3632,
+        656
+      ],
+      "id": "26e56139-215f-40fe-ae79-fdd747e7fb3e",
+      "name": "Delete rows or columns from sheet1"
+    },
+    {
+      "parameters": {
+        "content": "## Unsub logic\n",
+        "height": 400,
+        "width": 944,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2912,
+        432
+      ],
+      "typeVersion": 1,
+      "id": "a0a3aa3b-ab06-42bd-b73d-8e967650f3d5",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0b53aab8-34b2-4747-beb1-79180a34ad42",
+              "leftValue": "={{ $json['unsubbed?'] }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1872,
+        48
+      ],
+      "id": "e5af24ab-5720-492c-a0d4-d2d836dac664",
+      "name": "If11"
+    },
+    {
+      "parameters": {
+        "path": "unusb_code/:code",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        3104,
+        48
+      ],
+      "id": "ad4a8a78-c705-48c1-8a2a-2c73b33c17cb",
+      "name": "Webhook2",
+      "webhookId": "YOUR_WEBHOOK_ID_2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bddfe33a-5e46-4cdf-965a-7ce47f2c37cf",
+              "leftValue": "={{ $json['unsubbed?'] }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        768,
+        240
+      ],
+      "id": "4e1f5fff-266f-4b3b-b100-bf6fd0ff7bca",
+      "name": "If12"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "622ea935-08a3-4d6a-9b5d-344481531818",
+              "leftValue": "={{ $('Get row(s) in sheet1').item.json['unsubbed?'] }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3120,
+        1136
+      ],
+      "id": "d74eff67-dc2d-4c4f-9009-e5ddd7e226c0",
+      "name": "If13"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        944,
+        1456
+      ],
+      "id": "dc2b1b92-f201-404c-bbfd-eb04fff3345e",
+      "name": "Get row(s) in sheet4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "47378fef-bb76-4554-a153-22838abd73d1",
+              "leftValue": "={{ $json['unsubbed'] }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1168,
+        1456
+      ],
+      "id": "b55288a2-3e1d-40fe-b4cb-e50492df44cd",
+      "name": "If14"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "Tracking Pixel System and Lead Nurturing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1383602285,
+          "mode": "list",
+          "cachedResultName": "Warm_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=1383602285"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2768,
+        1552
+      ],
+      "id": "916f5a1d-9168-4531-b7be-22d94d5f72fc",
+      "name": "Get row(s) in sheet5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "47378fef-bb76-4554-a153-22838abd73d1",
+              "leftValue": "={{ $json['unsubbed'] }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2992,
+        1552
+      ],
+      "id": "b3f13798-2882-43b0-9db1-9d998ea2e2e6",
+      "name": "If15"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        2960,
+        560
+      ],
+      "id": "e34e5e50-ff8c-48c9-98f5-a7ed93ea1881",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "39b4fd6e-29f3-4f16-a488-b1453adb26b4",
+              "leftValue": "={{ $json.emails }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2640,
+        992
+      ],
+      "id": "fc22f3b9-8ca1-48d3-bea6-c27ba280ac24",
+      "name": "If16"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "39b4fd6e-29f3-4f16-a488-b1453adb26b4",
+              "leftValue": "={{ $json.emails }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        304,
+        1408
+      ],
+      "id": "87a31df5-eef0-47e2-8d70-e8df90969da1",
+      "name": "If17"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "39b4fd6e-29f3-4f16-a488-b1453adb26b4",
+              "leftValue": "={{ $json.emails }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2320,
+        1456
+      ],
+      "id": "248ffc59-dd0a-480d-b44a-5008fec3b68f",
+      "name": "If18"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "39b4fd6e-29f3-4f16-a488-b1453adb26b4",
+              "leftValue": "={{ $json.emails }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        352,
+        1728
+      ],
+      "id": "28694ee0-3154-49bb-a3bb-eb523142e6f6",
+      "name": "If19"
+    },
+    {
+      "parameters": {
+        "path": "unsub_code_warm/:code",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        3104,
+        224
+      ],
+      "id": "440fb6f6-7ad8-4f52-b354-ac4244967cef",
+      "name": "Webhook3",
+      "webhookId": "YOUR_WEBHOOK_ID_6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "27ae6f6f-9307-4236-9234-5196284c15b2",
+              "name": "meeting_status_url",
+              "value": "YOUR_NGROK_OR_WEBHOOK_BASE_URL/webhook/YOUR_WEBHOOK_ID_8/calendly",
+              "type": "string"
+            },
+            {
+              "id": "0d1fb417-f4ad-49b2-b72e-b725b0aa0420",
+              "name": "code",
+              "value": "={{ Array.from({length: 10}, () => Math.random().toString(36).charAt(2)).join('') + '-' + Array.from({length: 10}, () => Math.random().toString(36).charAt(2)).join('') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        240
+      ],
+      "id": "833c8288-96b8-48aa-8706-de71cb309c25",
+      "name": "Edit Fields6"
+    }
+  ],
+  "pinData": {
+    "Google Sheets Trigger2": [
+      {
+        "json": {
+          "row_number": 2,
+          "Lead_firstName": "EXAMPLE_FIRSTNAME",
+          "Lead_lastName": "",
+          "Lead_Email": "example_lead@example.com",
+          "Company_Name": "EXAMPLE_COMPANY",
+          "Industry": "Ecommerce",
+          "Position": "Owner",
+          "Problem": "Customer Interaction",
+          "Meeting booked?": "",
+          "Replied?": "",
+          "Obejction": "",
+          "Obejction1": "",
+          "Obejction2": "",
+          "unsub_code": "",
+          "unsubbed?": ""
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Generate Pixel": {
+      "main": [
+        [
+          {
+            "node": "Update Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code extracter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code extracter": {
+      "main": [
+        [
+          {
+            "node": "Update Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Leads": {
+      "main": [
+        [
+          {
+            "node": "Generate Pixel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send educational email": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Leads": {
+      "main": [
+        [
+          {
+            "node": "Send educational email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Case based email": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get base link": {
+      "main": [
+        [
+          {
+            "node": "Get Leads1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code extracter1": {
+      "main": [
+        [
+          {
+            "node": "Update Row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Code extracter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Leads1": {
+      "main": [
+        [
+          {
+            "node": "If11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Cold Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get leads": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Cold Leads": {
+      "main": [
+        [
+          {
+            "node": "Send announcements",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get warm leads": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Objection Handling mail": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Objection Handling mail1": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get base link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Get leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Alert team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert team1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Alert Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Get many messages1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet3": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Get many messages2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "If18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet4": {
+      "main": [
+        [
+          {
+            "node": "Send a text message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append or update row in sheet6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "If19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet5": {
+      "main": [
+        [
+          {
+            "node": "Send a text message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Get many messages3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Get warm leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code extracter2": {
+      "main": [
+        [
+          {
+            "node": "Update Row2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook2": {
+      "main": [
+        [
+          {
+            "node": "Code extracter2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code extracter3": {
+      "main": [
+        [
+          {
+            "node": "Update Row3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook3": {
+      "main": [
+        [
+          {
+            "node": "Code extracter3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet7": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Delete rows or columns from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet3": {
+      "main": [
+        [
+          {
+            "node": "If10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If10": {
+      "main": [
+        [
+          {
+            "node": "Delete rows or columns from sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If11": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Case based email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If13": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Objection Handling mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet4": {
+      "main": [
+        [
+          {
+            "node": "If14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If14": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Objection Handling mail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet5": {
+      "main": [
+        [
+          {
+            "node": "If15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If15": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get row(s) in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If16": {
+      "main": [
+        [
+          {
+            "node": "If13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If17": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If18": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If19": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "d5753faf-d870-49a3-858d-e3382ffeaaa7",
+  "meta": {
+    "instanceId": "2473cecb7731dd9e2af39f4558afe60d56e49d3ec66ab808319f331147a261ca"
+  },
+  "id": "qQD3iEzaWxHpYElqig5NK",
+  "tags": []
+}
