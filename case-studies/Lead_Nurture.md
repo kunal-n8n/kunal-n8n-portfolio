@@ -1,4 +1,4 @@
-# Title: Lead Nurture + Link Tracking System (n8n)
+# Lead Nurture + Link Tracking System (n8n)
 
 ## 🚩 Goal
 The goal was to build a logic based system that could automatically:
