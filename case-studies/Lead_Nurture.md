@@ -70,6 +70,21 @@ Everything runs automatically with no manual work.
 
 ---
 
+## 📊 Google Sheets Template
+
+This automation uses Google Sheets as a lightweight backend database for:
+
+- Storing lead data  
+- Tracking email content engagement  
+- Managing unsubscribe status    
+- Running long drip campaigns  
+
+A cleaned template version of the sheet used in this project can be downloaded here:
+
+[Download Google Sheets Template](../google_sheets_templates/Lead Nurture Automation.xlsx)
+
+---
+
 ## 📸 Screenshots
 
 ![LeadNurture1](../assets/LeadNurture1.png)
