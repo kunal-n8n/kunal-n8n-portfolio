@@ -81,7 +81,7 @@ This automation uses Google Sheets as a lightweight backend database for:
 
 A cleaned template version of the sheet used in this project can be downloaded here:
 
-[Download Google Sheets Template](https://github.com/kunal-n8n/kunal-n8n-portfolio/blob/main/google_sheets_templates/Lead%20Nurture%20Automation.xlsx)
+[Download Google Sheets Template](./google_sheets_templates/Lead Nurture Automation.xlsx)
 
 ---
 
