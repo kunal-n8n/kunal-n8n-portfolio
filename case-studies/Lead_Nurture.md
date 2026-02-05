@@ -68,7 +68,7 @@ Everything runs automatically with no manual work.
 
 - [View n8n Workflow JSON](../workflows/Lead_Nurture.json)
 
----
+
 
 ## 📊 Google Sheets Template
 
@@ -81,9 +81,8 @@ This automation uses Google Sheets as a lightweight backend database for:
 
 A cleaned template version of the sheet used in this project can be downloaded here:
 
-[Download Google Sheets Template](./google_sheets_templates/Lead Nurture Automation.xlsx)
+[Download Google Sheets Template](../google_sheets_templates/Lead_Nurture_Automation.xlsx) 
 
----
 
 ## 📸 Screenshots
 
