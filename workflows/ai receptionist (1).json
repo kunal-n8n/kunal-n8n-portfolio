@@ -16,13 +16,13 @@
       ],
       "id": "b72a07bb-1f3b-4088-98cf-71e3ca43dbcb",
       "name": "Webhook",
-      "webhookId": "YOUR_WEBHOOK_ID_1"
+      "webhookId": "PLACEHOLDER_WEBHOOK_ID_1"
     },
     {
       "parameters": {
         "calendar": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_CALENDAR_EMAIL",
+          "value": "PLACEHOLDER_GOOGLE_CALENDAR_EMAIL",
           "mode": "id"
         },
         "start": "={{ $json.isoDateTime }}",
@@ -41,7 +41,7 @@
       "name": "Create an event",
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_CALENDAR_CREDENTIAL_ID",
           "name": "Google Calendar account"
         }
       }
@@ -63,17 +63,17 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
           "mode": "list",
           "cachedResultName": "dentistData",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
         },
         "options": {}
       },
@@ -87,7 +87,7 @@
       "name": "Get row(s) in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_SHEETS_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       }
@@ -124,17 +124,17 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
           "mode": "list",
           "cachedResultName": "dentistData",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
         },
         "options": {}
       },
@@ -148,7 +148,7 @@
       "name": "Get row(s) in sheet1",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_SHEETS_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       }
@@ -168,7 +168,7 @@
       ],
       "id": "a1c31862-3d95-4bf1-85a7-44e0faae82e6",
       "name": "checkCode",
-      "webhookId": "YOUR_WEBHOOK_ID_2"
+      "webhookId": "PLACEHOLDER_WEBHOOK_ID_2"
     },
     {
       "parameters": {
@@ -191,17 +191,17 @@
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
           "mode": "list",
           "cachedResultName": "dentistData",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -289,7 +289,7 @@
       "name": "AddData",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_SHEETS_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       }
@@ -383,7 +383,7 @@
       ],
       "id": "06454358-c8b4-4f85-8cf6-1522dc6c8823",
       "name": "Webhook1",
-      "webhookId": "YOUR_WEBHOOK_ID_3"
+      "webhookId": "PLACEHOLDER_WEBHOOK_ID_3"
     },
     {
       "parameters": {
@@ -402,7 +402,7 @@
       "parameters": {
         "calendar": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_CALENDAR_EMAIL",
+          "value": "PLACEHOLDER_GOOGLE_CALENDAR_EMAIL",
           "mode": "id"
         },
         "start": "={{ $json.isoDateTime }}",
@@ -419,7 +419,7 @@
       "name": "Create an event1",
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_CALENDAR_CREDENTIAL_ID",
           "name": "Google Calendar account"
         }
       }
@@ -429,17 +429,17 @@
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
           "mode": "list",
           "cachedResultName": "dentistData",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -526,7 +526,7 @@
       "name": "Append or update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_SHEETS_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       }
@@ -563,17 +563,17 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
           "mode": "list",
           "cachedResultName": "dentistData",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
         },
         "options": {}
       },
@@ -587,7 +587,7 @@
       "name": "Get row(s) in sheet2",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_SHEETS_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       }
@@ -597,17 +597,17 @@
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
           "mode": "list",
           "cachedResultName": "dentistData",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -697,7 +697,7 @@
       "alwaysOutputData": false,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_SHEETS_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       },
@@ -753,7 +753,7 @@
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_CALENDAR_EMAIL",
+          "value": "PLACEHOLDER_GOOGLE_CALENDAR_EMAIL",
           "mode": "id"
         },
         "limit": 1,
@@ -771,7 +771,7 @@
       "name": "Get many events",
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_CALENDAR_CREDENTIAL_ID",
           "name": "Google Calendar account"
         }
       }
@@ -790,24 +790,24 @@
       ],
       "id": "1298322d-bb72-4ccf-8551-2c9ea7358c2a",
       "name": "cancellation",
-      "webhookId": "YOUR_WEBHOOK_ID_3"
+      "webhookId": "PLACEHOLDER_WEBHOOK_ID_4"
     },
     {
       "parameters": {
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_SHEETS_DOCUMENT_ID",
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
           "mode": "list",
           "cachedResultName": "dentistData",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -894,7 +894,7 @@
       "name": "Append or update row in sheet1",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_SHEETS_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       }
@@ -904,9 +904,9 @@
         "operation": "delete",
         "calendar": {
           "__rl": true,
-          "value": "YOUR_GOOGLE_CALENDAR_EMAIL",
+          "value": "PLACEHOLDER_GOOGLE_CALENDAR_EMAIL",
           "mode": "list",
-          "cachedResultName": "YOUR_GOOGLE_CALENDAR_EMAIL"
+          "cachedResultName": "PLACEHOLDER_GOOGLE_CALENDAR_EMAIL"
         },
         "eventId": "={{ $json.id }}",
         "options": {}
@@ -921,7 +921,7 @@
       "name": "Delete an event",
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "id": "PLACEHOLDER_GOOGLE_CALENDAR_CREDENTIAL_ID",
           "name": "Google Calendar account"
         }
       }
@@ -1154,11 +1154,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "SANITIZED_VERSION_ID",
+  "versionId": "PLACEHOLDER_VERSION_ID",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "SANITIZED_INSTANCE_ID"
+    "instanceId": "PLACEHOLDER_INSTANCE_ID"
   },
-  "id": "SANITIZED_WORKFLOW_ID",
+  "id": "PLACEHOLDER_WORKFLOW_ID",
   "tags": []
 }
