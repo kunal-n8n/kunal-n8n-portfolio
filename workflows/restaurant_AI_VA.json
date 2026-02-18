@@ -1,0 +1,3234 @@
+{
+  "name": "restaurant_AI_VA",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        736
+      ],
+      "id": "ff04b5db-e1a7-4494-a4fb-91091acb88b6",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "faec1fae-283b-4889-9fad-c8c9ebd2d70d",
+              "leftValue": "={{ $json.row_number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "0a811094-d881-430b-875f-2fe715e345a7",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "661751da-5ca6-4c51-9ac8-69e573aecca7",
+              "leftValue": "={{ $json.contact_number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "3a800b0b-84cd-40a3-b63e-c7b04ccde3f4",
+              "leftValue": "={{ $json.guests }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "26eefdc3-6d0e-4f93-a185-6724d3ccb7d1",
+              "leftValue": "={{ $json['booking_time '] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "8b292f8a-009e-40d0-b62a-86dcf8f47ccc",
+              "leftValue": "={{ $json.booking_date }}",
+              "rightValue": "",
+              "operator": {
+                "type": "dateTime",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        736
+      ],
+      "id": "d5f8a72e-31cb-478b-b5ec-aba42454478e",
+      "name": "Filter2"
+    },
+    {
+      "parameters": {
+        "content": "## Delete Old Records\n\n",
+        "height": 240,
+        "width": 2032,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        656
+      ],
+      "typeVersion": 1,
+      "id": "cf7208b7-51d2-4120-a081-f1d4acbe0796",
+      "name": "Sticky Note2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $('Filter3').first().json.table_id }}",
+            "status": "=Not booked",
+            "name": "=",
+            "contact_number": "=",
+            "guests": "=",
+            "booking_time ": "=",
+            "booking_date": "="
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time ",
+              "displayName": "booking_time ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1696,
+        736
+      ],
+      "id": "24743ca0-6b66-4dde-b161-0c6cce17437a",
+      "name": "Delete records"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.extracted_date }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        352,
+        736
+      ],
+      "id": "b4f36095-44cc-41d3-9995-0435e3724be9",
+      "name": "Get records",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Delete Old Records\n* Works every 5 minutes.\n- Gets records\n- Filters them based on booked tables \n- Filter's them again based on already completed bookings.\n- Deletes old records. ",
+        "height": 208,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1920,
+        672
+      ],
+      "typeVersion": 1,
+      "id": "c7d747d1-b017-4066-aecb-b0400be05f69",
+      "name": "Sticky Note3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Cancel Booking\n",
+        "height": 224,
+        "width": 672,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1824,
+        384
+      ],
+      "typeVersion": 1,
+      "id": "005a290f-a6f3-4ffc-94b1-5ab6f8f1c559",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Cancellation').item.json.body.args.booking_date }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "name": "=",
+            "status": "Not booked (Cancelled)",
+            "booking_date": "=",
+            "booking_time": "=",
+            "guests": "=",
+            "contact_number": "="
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2288,
+        448
+      ],
+      "id": "f81ff061-37f8-40df-8d5b-d0d99182dc9f",
+      "name": "Cancel Booking"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $json.body.args.booking_date }}",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "name",
+              "lookupValue": "={{ $json.body.args.name }}"
+            },
+            {
+              "lookupColumn": "contact_number",
+              "lookupValue": "={{ $json.body.args.contact_number }}"
+            },
+            {
+              "lookupColumn": "booking_time",
+              "lookupValue": "={{ $json.body.args.booking_time }}"
+            },
+            {
+              "lookupColumn": "booking_date",
+              "lookupValue": "={{ $json.body.args.booking_date }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2080,
+        448
+      ],
+      "id": "f4785e0a-6fc8-466b-88b3-839c6154b936",
+      "name": "Get Records2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "096a5b8b-6898-4c2e-83d3-b16156cc0148",
+              "leftValue": "={{ $json.booking_date }}",
+              "rightValue": "={{$today}}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        736
+      ],
+      "id": "113c1cfe-aaa5-45c9-ab59-d4edea1865a5",
+      "name": "Filter3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b1a137ac-5725-41d3-ac26-157c3032e393",
+              "leftValue": "={{ $json.end }}",
+              "rightValue": "={{ $now }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "before"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        736
+      ],
+      "id": "05c203be-493d-4533-8927-cf833bdcac27",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "title": "={{ $('Booking').item.json.body.args.booking_date }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        608,
+        176
+      ],
+      "id": "254a5310-4cb7-45a3-a4ea-5aebd9362121",
+      "name": "Create sheet",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1504,
+        176
+      ],
+      "id": "e8614bd4-dfbc-4f5f-a4f8-ccdb063cf378",
+      "name": "Add table_id"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1056,
+        176
+      ],
+      "id": "82a9b3b7-e4cd-426d-998f-8bf917d835e3",
+      "name": "Append Rows"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1728,
+        176
+      ],
+      "id": "d3e4daca-a9fc-4cc3-860f-d27045e95328",
+      "name": "Get row(s) in sheet",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "name": "={{ $('Booking').item.json.body.args.name }}",
+            "contact_number": "={{ $('Booking').item.json.body.args.contact_number }}",
+            "booking_time": "={{ $('Booking').item.json.body.args.booking_time }}",
+            "booking_date": "={{ $('Booking').item.json.body.args.booking_date }}",
+            "status": "Booked",
+            "guests": "=2"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1952,
+        176
+      ],
+      "id": "68b73010-1c9c-4ec2-b544-f68c84c02bdf",
+      "name": "Append or update row in sheet",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.body.args.booking_date }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        128,
+        368
+      ],
+      "id": "b39e298b-43cd-4b94-893c-10563e3b5997",
+      "name": "Get row(s) in sheet1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Booking').item.json.body.args.booking_date }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        608,
+        448
+      ],
+      "id": "1ff506ca-32f6-42ba-aee2-982be887f067",
+      "name": "Get row(s) in sheet2",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bca4d605-f799-4451-91f0-80d86432c784",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        368
+      ],
+      "id": "62aa832c-a68f-4ec5-bd53-f68236380914",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0b515e77-a00e-416d-ad08-c3fd78a9a910",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "dea3abc5-e1c6-4e0f-9c36-0252537687a1",
+              "leftValue": "={{ $json.contact_number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b0152642-bbe9-4555-9e82-476b9671aaaf",
+              "leftValue": "={{ $json.guests }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "323e0294-212c-40fe-81ff-59379dde96e1",
+              "leftValue": "={{ $json.booking_time }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "ee7fc55e-bdca-40c2-a54d-009d0f3995cb",
+              "leftValue": "={{ $json.booking_date }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "fd0531c5-d771-4f58-ab58-37e85c2a12cc",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Not booked",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        448
+      ],
+      "id": "df1d701a-a8c7-4565-be42-de9576563361",
+      "name": "Filter4",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "## Bookings/Auto-Sheet creation \n\n",
+        "height": 384,
+        "width": 672,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "e5725bf3-6d57-4df4-8469-e62f160dee4a",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get booking date and time from webhook\nconst bookingDate = $('Cancellation').first().json.body.args.booking_date; // e.g. \"2025-09-25\" or \"09/25/2025\"\nconst bookingTime = $('Cancellation').first().json.body.args.booking_time; // e.g. \"13:00\" or \"1:00 PM\"\n\n// Set your desired timezone offset (IST is +05:30)\nconst timezoneOffsetMinutes = 5 * 60 + 30; // 5 hours 30 minutes\n\n// Helper function to parse date and time into a Date object\nfunction parseDateTime(date, time) {\n  let year, month, day, hours = 0, minutes = 0;\n\n  // Parse date\n  if (date.includes('-')) {\n    [year, month, day] = date.split('-').map(Number); // YYYY-MM-DD\n  } else if (date.includes('/')) {\n    const parts = date.split('/').map(Number); // MM/DD/YYYY or DD/MM/YYYY\n    if (parts[0] > 12) {\n      [day, month, year] = parts; // DD/MM/YYYY\n    } else {\n      [month, day, year] = parts; // MM/DD/YYYY\n    }\n  } else {\n    throw new Error('Invalid date format');\n  }\n\n  // Parse time\n  if (time) {\n    let t = time.toUpperCase().trim();\n    if (t.includes('AM') || t.includes('PM')) {\n      const timeParts = t.replace(/[APM]/g, '').split(':');\n      hours = parseInt(timeParts[0]);\n      minutes = parseInt(timeParts[1] || 0);\n      if (t.includes('PM') && hours !== 12) hours += 12;\n      if (t.includes('AM') && hours === 12) hours = 0;\n    } else {\n      const timeParts = t.split(':');\n      hours = parseInt(timeParts[0]);\n      minutes = parseInt(timeParts[1] || 0);\n    }\n  }\n\n  return { year, month, day, hours, minutes };\n}\n\n// Helper to format into ISO with timezone offset (without changing local time)\nfunction toISOWithOffset({ year, month, day, hours, minutes }, offsetMinutes) {\n  const pad = (n) => n.toString().padStart(2, '0');\n  const sign = offsetMinutes >= 0 ? '+' : '-';\n  const absOffset = Math.abs(offsetMinutes);\n  const offsetHrs = pad(Math.floor(absOffset / 60));\n  const offsetMins = pad(absOffset % 60);\n\n  return `${year}-${pad(month)}-${pad(day)}T${pad(hours)}:${pad(minutes)}:00${sign}${offsetHrs}:${offsetMins}`;\n}\n\n// Parse start datetime\nconst startParts = parseDateTime(bookingDate, bookingTime);\nconst startISO = toISOWithOffset(startParts, timezoneOffsetMinutes);\n\n// Compute end datetime (+1.5 hours = 90 minutes)\nlet endDateObj = new Date(startParts.year, startParts.month - 1, startParts.day, startParts.hours, startParts.minutes);\nendDateObj = new Date(endDateObj.getTime() + 90 * 60 * 1000);\nconst endParts = {\n  year: endDateObj.getFullYear(),\n  month: endDateObj.getMonth() + 1,\n  day: endDateObj.getDate(),\n  hours: endDateObj.getHours(),\n  minutes: endDateObj.getMinutes()\n};\nconst endISO = toISOWithOffset(endParts, timezoneOffsetMinutes);\n\n// Return result in n8n Code node format\nreturn [\n  {\n    json: {\n      start: startISO,   // e.g., 2025-09-25T13:00:00+05:30\n      end: endISO,       // e.g., 2025-09-25T14:30:00+05:30\n      originalDate: bookingDate,\n      originalTime: bookingTime\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        736
+      ],
+      "id": "1c2fa86c-b461-43a3-908b-4ac852bfa771",
+      "name": "DateTime converter1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keep only the first row\nif (items.length > 0) {\n  return [items[0]]; // returns just the first available row\n} else {\n  return []; // no available rows\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        448
+      ],
+      "id": "d299a930-e9c2-4549-8cca-ff505ea24de6",
+      "name": "Extract first empty row"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract sheetId from input JSON\nconst sheetId = $json.sheetId;\n\n// Define the headers\nconst headers = [\n  \"name\",\n  \"contact_number\",\n  \"guests\",\n  \"booking_time\",\n  \"booking_date\",\n  \"table_id\",\n  \"status\"\n];\n\n// Create an empty row with just the sheetId reference\n// You can adapt this if you want to populate with actual data\nconst row = {\n  name: \"\",\n  contact_number: \"\",\n  guests: \"\",\n  booking_time: \"\",\n  booking_date: \"\",\n  table_id: \"\",\n  status: \"\",\n};\n\n// Return row so the Google Sheets node can append it\nreturn [{ json: row }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        176
+      ],
+      "id": "48af0ce1-36ae-428a-807f-7d1cf094d09f",
+      "name": "Append Columns"
+    },
+    {
+      "parameters": {
+        "jsCode": "const sheetId = $json.sheetId;\n\n// Columns: name, contact_number, guests, booking_time, booking_date, table_id, status\nlet rows = [];\n\nfor (let i = 1; i <= 9; i++) {\n  rows.push({\n    name: \"\",\n    contact_number: \"\",\n    guests: \"\",\n    booking_time: \"\",\n    booking_date: \"\",\n    table_id: i,      // numbers 1 to 9\n    status: \"Not booked\" // default status\n  });\n}\n\nreturn rows.map(row => ({ json: row }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        176
+      ],
+      "id": "fad88f49-f852-4df5-bbb6-df838e97ee95",
+      "name": "Append table_id and status"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code Node - Extract Date from ISO DateTime String\n\n// Function to extract date from ISO format\nfunction extractDateFromISO(isoString) {\n  // Regex pattern to match YYYY-MM-DD format\n  const dateRegex = /\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])/;\n  \n  // Check if input is valid\n  if (!isoString || typeof isoString !== 'string') {\n    return null;\n  }\n  \n  // Extract the date\n  const match = isoString.match(dateRegex);\n  return match ? match[0] : null;\n}\n\n// Main processing logic\nconst items = $input.all();\nconst processedItems = [];\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  \n  // Extract date from different possible field names\n  // Adjust these field names based on your data structure\n  const isoDateString = item.json.created_at || \n                       item.json.updated_at || \n                       item.json.timestamp || \n                       item.json.date ||\n                       item.json.datetime;\n  \n  // Extract the date\n  const extractedDate = extractDateFromISO(isoDateString);\n  \n  // Create new item with extracted date\n  const newItem = {\n    json: {\n      ...item.json,\n      original_datetime: isoDateString,\n      extracted_date: extractedDate,\n      extraction_success: extractedDate !== null\n    }\n  };\n  \n  processedItems.push(newItem);\n}\n\nreturn processedItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        736
+      ],
+      "id": "60f4c7fb-ffa6-4547-8430-811fc8a31769",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "PLACEHOLDER_WEBHOOK_PATH_1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1872,
+        448
+      ],
+      "id": "c2bc29c9-3881-4ade-8603-9d0aa7ba9b87",
+      "name": "Cancellation",
+      "webhookId": "PLACEHOLDER_WEBHOOK_ID_1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "41413aa9-c8d8-45e3-8a21-69aeb2a9730f",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "365fbe7d-6e54-461a-8379-8aa1bce17a3c",
+              "leftValue": "={{ $json.contact_number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "e60181e4-6e6b-4e9a-a033-deb6a9cbd6cf",
+              "leftValue": "={{ $json.guests }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "3d8be664-df87-4960-87de-c199419e8c1d",
+              "leftValue": "={{ $json.booking_time }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b089f100-66ae-486f-9bb7-324d3fbd7d11",
+              "leftValue": "={{ $json.booking_date }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "0e191be2-7b91-4d03-8d7a-8b46393c00dc",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Not booked",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1328,
+        1280
+      ],
+      "id": "fc9b4764-5915-44a6-9ba5-4330dd13daf9",
+      "name": "Filter",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keep only the first row\nif (items.length > 0) {\n  return [items[0]]; // returns just the first available row\n} else {\n  return []; // no available rows\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        1280
+      ],
+      "id": "244cd7ef-4992-40b5-a117-c1b048a5f7c2",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Webhook').item.json.body.args.new_bookingdate }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "name": "={{ $('Webhook').item.json.body.args.name }}",
+            "contact_number": "={{ $('Webhook').item.json.body.args.contact_number }}",
+            "guests": "={{ $('Webhook').item.json.body.args.guests }}",
+            "booking_time": "={{ $('Webhook').item.json.body.args.new_booking_time }}",
+            "booking_date": "={{ $('Webhook').item.json.body.args.new_bookingdate }}",
+            "status": "Rescheduled"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2000,
+        1280
+      ],
+      "id": "263aa2f0-d109-4852-8da1-142232905088",
+      "name": "Make bookings"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Webhook').item.json.body.args.booking_date }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        1280
+      ],
+      "id": "e14f36ed-0213-45fc-8192-7251569a8b69",
+      "name": "Get Records",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "380bbc61-5118-494b-8eb4-8657d7aed9aa",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1552,
+        1280
+      ],
+      "id": "4fe71c05-0786-4c40-95b8-8a01d479c543",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## Rescheduling Table\n\n",
+        "height": 432,
+        "width": 672,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        976
+      ],
+      "typeVersion": 1,
+      "id": "298fafc3-ff7d-47ca-a0d1-1cf65104e654",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Webhook').item.json.body.args.new_bookingdate }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "booking_date": "=",
+            "booking_time": "=",
+            "guests": "=",
+            "contact_number": "=",
+            "name": "=",
+            "status": "Not booked"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1104,
+        1280
+      ],
+      "id": "64f8c45d-b3de-460c-92db-82e793a8f247",
+      "name": "Append or update row in sheet3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "017edaf8-1644-4c42-bfab-7201c8a43786",
+              "leftValue": "={{ $('Webhook').item.json.body.args.name }}",
+              "rightValue": "={{ $json.name }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "ed4a62e9-7b29-4965-89bf-afa6d57e52a0",
+              "leftValue": "={{ $('Webhook').item.json.body.args.booking_time }}",
+              "rightValue": "={{ $json.booking_time }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "259ec7d4-7178-49c2-b67b-36739c79826a",
+              "leftValue": "={{ $('Webhook').item.json.body.args.booking_time }}",
+              "rightValue": "={{ $json.booking_time }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        1280
+      ],
+      "id": "f753acd0-c936-439b-be43-6d7410531b19",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "title": "={{ $('Webhook').item.json.body.args.new_bookingdate }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        640,
+        992
+      ],
+      "id": "5b655ff3-0a8f-4a4d-820a-7fe842e81b6e",
+      "name": "Create sheet1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet1').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1536,
+        992
+      ],
+      "id": "70027bb9-119e-488c-a7ba-00b2dfd8f27c",
+      "name": "Add table_id1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet1').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "name": "=",
+            "contact_number": "=",
+            "status": "=",
+            "booking_date": "=",
+            "booking_time": "=",
+            "guests": "="
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1088,
+        992
+      ],
+      "id": "62ddb071-812d-41dc-bce2-8e8732620377",
+      "name": "Append Rows1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet1').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1760,
+        992
+      ],
+      "id": "d75f0ac3-00f3-480b-b788-19fb7d803e00",
+      "name": "Get row(s) in sheet3",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create sheet1').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "name": "={{ $('Webhook').item.json.body.args.name }}",
+            "contact_number": "={{ $('Webhook').item.json.body.args.contact_number }}",
+            "booking_time": "={{ $('Webhook').item.json.body.args.new_booking_time }}",
+            "booking_date": "={{ $('Webhook').item.json.body.args.new_bookingdate }}",
+            "status": "Booked ",
+            "guests": "={{ $('Webhook').item.json.body.args.guests }}"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1984,
+        992
+      ],
+      "id": "f8d95d7b-56a5-4d46-b659-1031726d12ff",
+      "name": "Append or update row in sheet2",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract sheetId from input JSON\nconst sheetId = $json.sheetId;\n\n// Define the headers\nconst headers = [\n  \"name\",\n  \"contact_number\",\n  \"guests\",\n  \"booking_time\",\n  \"booking_date\",\n  \"table_id\",\n  \"status\"\n];\n\n// Create an empty row with just the sheetId reference\n// You can adapt this if you want to populate with actual data\nconst row = {\n  name: \"\",\n  contact_number: \"\",\n  guests: \"\",\n  booking_time: \"\",\n  booking_date: \"\",\n  table_id: \"\",\n  status: \"\",\n};\n\n// Return row so the Google Sheets node can append it\nreturn [{ json: row }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        864,
+        992
+      ],
+      "id": "d5ab7ec5-74f5-43ce-96da-696b86225647",
+      "name": "Append Columns1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const sheetId = $json.sheetId;\n\n// Columns: name, contact_number, guests, booking_time, booking_date, table_id, status\nlet rows = [];\n\nfor (let i = 1; i <= 9; i++) {\n  rows.push({\n    name: \"\",\n    contact_number: \"\",\n    guests: \"\",\n    booking_time: \"\",\n    booking_date: \"\",\n    table_id: i,      // numbers 1 to 9\n    status: \"Not booked\" // default status\n  });\n}\n\nreturn rows.map(row => ({ json: row }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        992
+      ],
+      "id": "57ae54a2-100f-4e66-b7f2-d061a2992193",
+      "name": "Append table_id and status1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "PLACEHOLDER_WEBHOOK_PATH_2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        1120
+      ],
+      "id": "42fc34be-2eda-4a64-9121-86e6418dc63b",
+      "name": "Webhook",
+      "webhookId": "PLACEHOLDER_WEBHOOK_ID_2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $json.body.args.new_bookingdate }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        144,
+        1120
+      ],
+      "id": "d8006157-c0ce-44e9-af24-87748082b6ab",
+      "name": "Get row(s) in sheet4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e0ec78b1-394a-446f-9fcf-3edae2d8f2d9",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        368,
+        1120
+      ],
+      "id": "8331157b-dad5-454d-b957-ebce25abc836",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Webhook').item.json.body.args.booking_date }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2208,
+        992
+      ],
+      "id": "9b557f6b-3dfc-4802-8c71-959c5e4e11c1",
+      "name": "Get row(s) in sheet5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "48adfbd5-5acb-4b88-8e68-2eabd7e81fed",
+              "leftValue": "={{ $('Webhook').item.json.body.args.name }}",
+              "rightValue": "={{ $json.name }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "c9dbd8fa-6770-4854-a8eb-d8349cc646d7",
+              "leftValue": "={{ $('Webhook').item.json.body.args.booking_date }}",
+              "rightValue": "={{ $json.booking_date }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "fdf644e0-fb52-4d68-bf94-6a099bbe5f53",
+              "leftValue": "={{ $('Webhook').item.json.body.args.booking_time }}",
+              "rightValue": "={{ $json.booking_time }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "9f6f9b03-ac5c-41b9-b405-309e89abc5b0",
+              "leftValue": "={{ $('Webhook').item.json.body.args.contact_number }}",
+              "rightValue": "={{ $json.contact_number }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "4fa92df6-1e3c-48e8-9246-b52a1ab9bfe3",
+              "leftValue": "={{ $('Webhook').item.json.body.args.guests }}",
+              "rightValue": "={{ $json.guests }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f2272925-e7ef-417e-9648-3daee69b65ba",
+              "leftValue": "status",
+              "rightValue": "Booked",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        2448,
+        992
+      ],
+      "id": "4ef2d6f6-3382-4fb5-bc61-1b4a11ee398e",
+      "name": "Filter5"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Webhook').item.json.body.args.booking_date }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "name": "=",
+            "contact_number": "=",
+            "guests": "=",
+            "booking_date": "=",
+            "booking_time": "=",
+            "status": "Not booked"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2688,
+        992
+      ],
+      "id": "62e6a471-abcd-412c-9bdb-394b439fa4fa",
+      "name": "Append or update row in sheet4",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "PLACEHOLDER_WEBHOOK_PATH_3",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        368
+      ],
+      "id": "0362d288-4d40-4d6d-acbd-7dbf9031b012",
+      "name": "Booking",
+      "webhookId": "PLACEHOLDER_WEBHOOK_ID_3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c8c4030c-1f52-4835-9043-5ee5b3944491",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        576,
+        736
+      ],
+      "id": "d879b739-40c5-4826-aef9-d585570875a9",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Booking').item.json.body.args.booking_date }}"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $json.table_id }}",
+            "name": "={{ $('Booking').item.json.body.args.name }}",
+            "contact_number": "={{ $('Booking').item.json.body.args.contact_number }}",
+            "guests": "={{ $('Booking').item.json.body.args.guests }}",
+            "booking_date": "={{ $('Booking').item.json.body.args.booking_date }}",
+            "status": "Booked",
+            "booking_time": "={{ $('Booking').item.json.body.args.booking_time }}"
+          },
+          "matchingColumns": [
+            "table_id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1504,
+        448
+      ],
+      "id": "c8766d03-782f-45cd-954e-b9c251739842",
+      "name": "Make Booking"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ff7954ac-0e4b-4191-8b22-ca64ad9c8eb4",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1056,
+        448
+      ],
+      "id": "fa767966-5975-4cee-b5e7-0bc1ef043d32",
+      "name": "if (booking)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Helper functions\nfunction parseTimeToMinutes(timeStr) {\n  const [hours, minutes] = timeStr.split(\":\").map(Number);\n  return hours * 60 + minutes;\n}\n\nfunction minutesToTimeStr(totalMinutes) {\n  totalMinutes = ((totalMinutes % (24 * 60)) + (24 * 60)) % (24 * 60); // wrap around midnight\n  const h = Math.floor(totalMinutes / 60);\n  const m = totalMinutes % 60;\n  return `${String(h).padStart(2, \"0\")}:${String(m).padStart(2, \"0\")}`;\n}\n\nfunction circularDiff(a, b) {\n  const d = Math.abs(a - b);\n  return Math.min(d, 24 * 60 - d); // minimal difference considering midnight\n}\n\n// ---------------- MAIN ----------------\nconst sheetData = $('Get row(s) in sheet2').all(); // all rows\nconst webhookTimeStr = $('Booking').item.json.body.args.booking_time;\nconst webhookMinutes = parseTimeToMinutes(webhookTimeStr);\n\nlet matches = [];\n\nfor (const row of sheetData) {\n  const bookingTimeStr = row.json.booking_time;\n  if (!bookingTimeStr) continue;\n\n  const bookingMinutes = parseTimeToMinutes(bookingTimeStr);\n\n  // Add 90 minutes\n  const bookingEnd = (bookingMinutes + 90) % (24 * 60);\n\n  // Difference with webhook\n  const diff = circularDiff(bookingEnd, webhookMinutes);\n\n  // Match if gap is at least 30 minutes\n  if (diff >= 30) {\n    matches.push({\n      table_id: row.json.table_id,\n      booking_time: bookingTimeStr,\n      booking_end: minutesToTimeStr(bookingEnd),\n      webhook_time: webhookTimeStr,\n      gap_minutes: diff\n    });\n  }\n}\n\n// Return matches or false\nreturn matches.length > 0 ? matches : [{ match: false }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        32
+      ],
+      "id": "d55d264f-402b-407a-98d9-c1aacebca56f",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the table_id from previous match\nconst tableId = $input.first().json.table_id;\n\n// Get new booking data from webhook\nconst newBookingTime = $input.first().json.booking_time; // or wherever your webhook time is\nconst newBookingDate = $input.first().json.booking_date; // optional\n\n// Get the existing row data from the sheet\nconst sheetRows = $('Get row(s) in sheet2').all();\n\n// Find the row with this table_id\nlet rowToUpdate = sheetRows.find(r => r.json.table_id === tableId);\n\nif (!rowToUpdate) {\n    return [{ json: { error: \"Table_id not found in sheet\" } }];\n}\n\n// Prepare new values by appending (comma separated) to existing values\nconst updatedBookingTimes = rowToUpdate.json.booking_times\n    ? rowToUpdate.json.booking_times + `, ${newBookingTime}`\n    : newBookingTime;\n\nconst updatedBookingDates = rowToUpdate.json.booking_dates\n    ? rowToUpdate.json.booking_dates + `, ${newBookingDate}`\n    : newBookingDate;\n\n// Return updated row to use in \"Update\" Google Sheets node\nreturn [\n    {\n        json: {\n            table_id: tableId,\n            booking_times: updatedBookingTimes,\n            booking_dates: updatedBookingDates\n        }\n    }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        96,
+        32
+      ],
+      "id": "2e386c39-7286-4ed8-8a95-1b3f70f7732b",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID",
+          "mode": "list",
+          "cachedResultName": "table booking",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/PLACEHOLDER_GOOGLE_SHEETS_DOCUMENT_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Booking').first()\n.json.body.args.booking_date }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "table_id": "={{ $('Code in JavaScript2').first().json.table_id }}",
+            "status": "Booked",
+            "booking_date": "={{ $('Booking').first().json.body.args.booking_date }}",
+            "booking_time": "={{ $('Booking').first().json.body.args.booking_time }}",
+            "contact_number": "={{ $('Booking').first().json.body.args.contact_number }}",
+            "guests": "={{ $('Booking').first().json.body.args.guests }}",
+            "name": "={{ $('Booking').first().json.body.args.name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contact_number",
+              "displayName": "contact_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "guests",
+              "displayName": "guests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_time",
+              "displayName": "booking_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "booking_date",
+              "displayName": "booking_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "table_id",
+              "displayName": "table_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        32
+      ],
+      "id": "bb302c6c-449d-4b04-9884-f6546b608793",
+      "name": "Append row in sheet"
+    },
+    {
+      "parameters": {
+        "content": "## Future Date\n",
+        "height": 256,
+        "width": 2336,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        928
+      ],
+      "typeVersion": 1,
+      "id": "d6442b56-bbd9-44eb-870d-6f410bae82f5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Same Day\n\n",
+        "height": 240,
+        "width": 1696,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        1216
+      ],
+      "typeVersion": 1,
+      "id": "5d551de9-82e8-4fa1-8314-6161bc744881",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Future Date\n",
+        "height": 240,
+        "width": 1616,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "8a9abe1a-c4d7-4221-bf94-f944a8d5f7b6",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Same Day",
+        "height": 224,
+        "width": 1184,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        384
+      ],
+      "typeVersion": 1,
+      "id": "995c7932-05e8-48a1-8422-a89c3c71a4fd",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Time Based Entry\n",
+        "height": 224,
+        "width": 672,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "35e672e9-1e77-448c-9a80-0b61ea8eaf9c",
+      "name": "Sticky Note9"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter2": {
+      "main": [
+        [
+          {
+            "node": "Filter3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get records": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Records2": {
+      "main": [
+        [
+          {
+            "node": "Cancel Booking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter3": {
+      "main": [
+        [
+          {
+            "node": "DateTime converter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Delete records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create sheet": {
+      "main": [
+        [
+          {
+            "node": "Append Columns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add table_id": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Rows": {
+      "main": [
+        [
+          {
+            "node": "Append table_id and status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Filter4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Create sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter4": {
+      "main": [
+        [
+          {
+            "node": "if (booking)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DateTime converter1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract first empty row": {
+      "main": [
+        [
+          {
+            "node": "Make Booking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Columns": {
+      "main": [
+        [
+          {
+            "node": "Append Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append table_id and status": {
+      "main": [
+        [
+          {
+            "node": "Add table_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancellation": {
+      "main": [
+        [
+          {
+            "node": "Get Records2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Make bookings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Records": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet3": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create sheet1": {
+      "main": [
+        [
+          {
+            "node": "Append Columns1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add table_id1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Rows1": {
+      "main": [
+        [
+          {
+            "node": "Append table_id and status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet3": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Columns1": {
+      "main": [
+        [
+          {
+            "node": "Append Rows1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append table_id and status1": {
+      "main": [
+        [
+          {
+            "node": "Add table_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet4": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Create sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet5": {
+      "main": [
+        [
+          {
+            "node": "Filter5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter5": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Booking": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Filter2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if (booking)": {
+      "main": [
+        [
+          {
+            "node": "Extract first empty row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "31d5f727-f468-4315-8252-8ea842a096ef",
+  "meta": {
+    "instanceId": "2473cecb7731dd9e2af39f4558afe60d56e49d3ec66ab808319f331147a261ca"
+  },
+  "id": "OuYg0LVgp7HbF2is",
+  "tags": []
+}
