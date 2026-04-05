@@ -1,17 +1,15 @@
-#  Kunal – Automation Portfolio
+## Kunal – n8n Automation Engineer
+I build reliable, logic-driven automation workflows for agencies and their clients. Over the past year I've worked with n8n to solve real operational problems — reducing manual work, connecting systems, and designing flows that hold up in production.
+This portfolio documents the systems I've built, the decisions behind them, and how I approach automation engineering.
 
-This repository is my personal portfolio where I document and showcase the automation workflows I build while learning and experimenting with tools like **n8n, APIs, and messaging platforms**.
+## What I build:
 
-Rather than a large collection of client projects, this portfolio represents my practical understanding of automation concepts and real-world problem solving.
+Business process automation (lead handling, appointment systems, CRM sync)
+Webhook-driven pipelines and API integrations
+Multi-step workflows with error handling and edge case logic
+AI-augmented automations using n8n's AI nodes
 
----
-
-My goal is to build workflows that are:
-- Simple  
-- Reliable  
-- Logic-driven  
-- Easy to maintain  
-
+Tools I work with: n8n · Webhooks & REST APIs · JavaScript · Twilio · Google Workspace · Retell AI · Databases
 ---
 
 ## 📚 Case Studies
