@@ -72,6 +72,6 @@ This portfolio reflects my journey and growth as I create more advanced systems 
 
 If you’d like to discuss automations or collaboration, you can reach me here:
 
-- Email: nnkunal47@gmail.com   
+- Email: kunalsd2007@proton.me 
 
 I’m open to freelance projects, and collaboration opportunities.
